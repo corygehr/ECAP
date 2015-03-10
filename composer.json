@@ -24,9 +24,9 @@
 			"shared/sessions",
 			"shared/tests",
 			"shared/views",
-			"thinkerfw/controllers",
-			"thinkerfw/models",
-			"thinkerfw/tests"
+			"eoccap/controllers",
+			"eoccap/models",
+			"eoccap/tests"
 		]
 	},
 	"require": {
