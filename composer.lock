@@ -4,64 +4,20 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "aeb67c961e6014fec4d6ccc8ab309788",
+    "hash": "a833c8c12b6383a4a7bf7d2f7b45f141",
     "packages": [
-        {
-            "name": "corygehr/thinker-simpleauth",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/corygehr/thinker-simpleauth.git",
-                "reference": "67e5ab4b26a120789037394ca7cd396f143cd42b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/corygehr/thinker-simpleauth/zipball/67e5ab4b26a120789037394ca7cd396f143cd42b",
-                "reference": "67e5ab4b26a120789037394ca7cd396f143cd42b",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4",
-                "thon/thinker-lib": "dev-master"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Thinker\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Cory Gehr",
-                    "email": "gehrc621@gmail.com",
-                    "homepage": "http://www.corygehr.com",
-                    "role": "Lead Developer"
-                }
-            ],
-            "description": "THINKer Framework Simple Authentication Library",
-            "homepage": "https://github.com/corygehr/thinker-simpleauth",
-            "keywords": [
-                "Authentication",
-                "framework"
-            ],
-            "time": "2015-03-23 20:22:32"
-        },
         {
             "name": "thon/thinker-lib",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/penn-state-dance-marathon/thon-thinker-lib.git",
-                "reference": "afc186950ca552435e082f5709b9a1717eb47699"
+                "reference": "ad24e44d7d6a20caf53999c0f830143f60bb4ea4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/penn-state-dance-marathon/thon-thinker-lib/zipball/afc186950ca552435e082f5709b9a1717eb47699",
-                "reference": "afc186950ca552435e082f5709b9a1717eb47699",
+                "url": "https://api.github.com/repos/penn-state-dance-marathon/thon-thinker-lib/zipball/ad24e44d7d6a20caf53999c0f830143f60bb4ea4",
+                "reference": "ad24e44d7d6a20caf53999c0f830143f60bb4ea4",
                 "shasum": ""
             },
             "require": {
@@ -91,7 +47,7 @@
                 "framework",
                 "thon"
             ],
-            "time": "2015-01-22 16:57:24"
+            "time": "2015-04-06 19:32:31"
         }
     ],
     "packages-dev": [
@@ -473,12 +429,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "55484334fb4c306ed24bfc3bdb0874685c29036f"
+                "reference": "74ffb87f527f24616f72460e54b595f508dccb5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/55484334fb4c306ed24bfc3bdb0874685c29036f",
-                "reference": "55484334fb4c306ed24bfc3bdb0874685c29036f",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/74ffb87f527f24616f72460e54b595f508dccb5c",
+                "reference": "74ffb87f527f24616f72460e54b595f508dccb5c",
                 "shasum": ""
             },
             "require": {
@@ -487,7 +443,7 @@
                 "phpunit/php-text-template": "~1.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.4.*@dev"
+                "phpunit/phpunit": "~4.4"
             },
             "suggest": {
                 "ext-soap": "*"
@@ -495,7 +451,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4.x-dev"
+                    "dev-master": "2.3.x-dev"
                 }
             },
             "autoload": {
@@ -520,7 +476,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2015-03-18 09:04:51"
+            "time": "2015-04-02 05:36:41"
         },
         {
             "name": "sebastian/comparator",
@@ -809,16 +765,16 @@
         },
         {
             "name": "sebastian/version",
-            "version": "1.0.4",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/version.git",
-                "reference": "a77d9123f8e809db3fbdea15038c27a95da4058b"
+                "reference": "ab931d46cd0d3204a91e1b9a40c4bc13032b58e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/version/zipball/a77d9123f8e809db3fbdea15038c27a95da4058b",
-                "reference": "a77d9123f8e809db3fbdea15038c27a95da4058b",
+                "url": "https://api.github.com/repos/sebastianbergmann/version/zipball/ab931d46cd0d3204a91e1b9a40c4bc13032b58e4",
+                "reference": "ab931d46cd0d3204a91e1b9a40c4bc13032b58e4",
                 "shasum": ""
             },
             "type": "library",
@@ -840,7 +796,7 @@
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
-            "time": "2014-12-15 14:25:24"
+            "time": "2015-02-24 06:35:25"
         },
         {
             "name": "symfony/yaml",
@@ -849,12 +805,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "bc2504716cb3f7704dfff5d5dcb88df43282f414"
+                "reference": "3882af2f22672e347030b561cc6c5abc2b335566"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/bc2504716cb3f7704dfff5d5dcb88df43282f414",
-                "reference": "bc2504716cb3f7704dfff5d5dcb88df43282f414",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/3882af2f22672e347030b561cc6c5abc2b335566",
+                "reference": "3882af2f22672e347030b561cc6c5abc2b335566",
                 "shasum": ""
             },
             "require": {
@@ -890,14 +846,13 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2015-03-22 16:57:18"
+            "time": "2015-03-30 15:55:07"
         }
     ],
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "thon/thinker-lib": 20,
-        "corygehr/thinker-simpleauth": 20
+        "thon/thinker-lib": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
