@@ -149,7 +149,6 @@ class Lot extends \Thinker\Framework\Model
 				  longitude = :longitude, 
 				  max_capacity = :max_capacity, 
 				  update_user = :user 
-				  update_time = NOW() 
 				  WHERE id = :id 
 				  LIMIT 1";
 
