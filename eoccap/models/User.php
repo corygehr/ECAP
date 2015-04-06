@@ -11,12 +11,12 @@ namespace EocCap;
 class User
 {
 	// Properties
-	private $username;
-	private $type;
-	private $full_name;
-	private $create_date;
-	private $update_date;
-	private $delete_date;
+	public $username;
+	public $type;
+	public $full_name;
+	public $create_date;
+	public $update_date;
+	public $delete_date;
 
 	/**
 	 * __construct()
@@ -25,7 +25,7 @@ class User
 	 * @access public
 	 * @param string $username Username of the User
 	 */
-	public function __construct($username)
+	public function __construct($username = null)
 	{
 		global $_DB;
 
@@ -52,75 +52,49 @@ class User
 	}
 
 	/**
-	 * getCreateTime()
-	 * Returns the date/time this object was created
+	 * create()
+	 * Creates a new User object
 	 *
 	 * @access public
-	 * @return string Date/Time of Object Creation
+	 * @static
+	 * @param mixed[] $data Data to commit
+	 * @return string ID of New Object
 	 */
-	public function getCreateTime()
+	public static function create($data)
 	{
-		return $this->create_time;
+		global $_DB;
+
+		$query = "INSERT INTO users(username, type, full_name, 
+			create_date) 
+			VALUES(?, ?, ?, NOW())";
+
+		if($_DB['eoc_cap_mgmt']->doQuery($query, $data))
+		{
+			// Provide ID of created object
+			return $_DB['eoc_cap_mgmt']->lastInsertId();
+		}
+
+		return false;
 	}
 
 	/**
-	 * getDeleteTime()
-	 * Returns the date/time this object was deactivated
+	 * delete()
+	 * Deactivates this object
 	 *
 	 * @access public
-	 * @return string Date/Time of Object Deactivation
+	 * @return bool True on Success, False on Failure
 	 */
-	public function getDeleteTime()
+	public function delete()
 	{
-		return $this->delete_time;
-	}
+		global $_DB;
 
-	/**
-	 * getName()
-	 * Returns the full name of the user
-	 *
-	 * @access public
-	 * @return string Full Name of User
-	 */
-	public function getName()
-	{
-		return $this->full_name;
-	}
+		$query = "UPDATE users 
+				  SET delete_time = NOW() 
+				  WHERE username = :username 
+				  LIMIT 1";
+		$params = array(':username' => $this->username);
 
-	/**
-	 * getType()
-	 * Returns the user authentication type
-	 *
-	 * @access public
-	 * @return string User Type
-	 */
-	public function getType()
-	{
-		return $this->type;
-	}
-
-	/**
-	 * getUpdateTime()
-	 * Returns the date/time this object was last updated
-	 *
-	 * @access public
-	 * @return string Date/Time of Last Update
-	 */
-	public function getUpdateTime()
-	{
-		return $this->update_time;
-	}
-
-	/**
-	 * getUsername()
-	 * Returns the username of the current user
-	 *
-	 * @access public
-	 * @return string Username
-	 */
-	public function getUsername()
-	{
-		return $this->username;
+		return $_DB['eoc_cap_mgmt']->doQuery($query, $params);
 	}
 
 	/**
@@ -133,5 +107,25 @@ class User
 	public function isActive()
 	{
 		return !($this->delete_time);
+	}
+
+	/**
+	 * update()
+	 * Commits the updated object to the database
+	 *
+	 * @access public
+	 * @return True on Success, False on Failure
+	 */
+	public function update()
+	{
+		global $_DB;
+
+		$query = "UPDATE users
+				  SET type = :type,
+				  full_name = :full_name 
+				  WHERE username = :username 
+				  LIMIT 1";
+
+		return $_DB['eoc_lot_mgmt']->doQuery($query, $this->toArray());
 	}
 }
