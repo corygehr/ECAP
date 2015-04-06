@@ -1,7 +1,7 @@
 <?php
 	/**
 	 * models/LotStatusLog.php 
-	 * Contains the LotStatus class
+	 * Contains the LotStatusLog class
 	 *
 	 * @author Cory Gehr
 	 */
@@ -25,7 +25,7 @@ class LotStatusLog extends \Thinker\Framework\Model
 	
 	/**
 	 * __construct()
-	 * Constructor for the LotStatus class
+	 * Constructor for the LotStatusLog class
 	 *
 	 * @access public
 	 * @param int $id ID of the Object
