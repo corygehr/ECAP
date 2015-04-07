@@ -32,7 +32,7 @@ class LotManagement extends \Thinker\Framework\Controller
 	public function manage()
 	{
 		// Get all lots
-		$this->set('LOTS', Lot::fetchAll());
+		$this->set('LOTS', Lot::findAll());
 	}
 }
 ?>
