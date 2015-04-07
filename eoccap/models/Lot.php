@@ -119,6 +119,25 @@ class Lot extends \Thinker\Framework\Model
 	}
 
 	/**
+	 * findAll()
+	 * Fetches all objects of this type
+	 *
+	 * @access public
+	 * @static
+	 * @return mixed[] Array of Lot results
+	 */
+	public static function findAll()
+	{
+		global $_DB;
+
+		$query = "SELECT *
+				  FROM lots
+				  ORDER BY name";
+
+		return $_DB['eoc_cap_mgmt']->doQueryArr($query);
+	}
+
+	/**
 	 * isActive()
 	 * Returns true if the current object is active
 	 *
