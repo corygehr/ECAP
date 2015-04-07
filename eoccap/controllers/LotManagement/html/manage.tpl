@@ -7,9 +7,33 @@
      */
 ?>
 <h1>Manage Lot</h1>
-<p>
-	Existing Lots
-</p>
+<form method="post">
+	<fieldset>
+		<legend>Add Lot</legend>
+		<p>
+			<label for="name">Lot Name:</label><br>
+			<input name="name" />
+		</p>
+		<p>
+			<label for="color">Lot Color:</label><br>
+			<input name="color" />
+		</p>
+		<p>
+			<label for="location_name">Location Name:</label><br>
+			<input name="location_name" />
+		</p>
+		<p>
+			<label for="latitude">Latitude:</label><br>
+			<input name="latitude" />
+		</p>
+		<p>
+			<label for="longitude">Longitude:</label><br>
+			<input name="longitude" />
+		</p>
+		<input type="submit" value="Add Lot" />
+	</fieldset>
+</form>
+<h2>Existing Lots</h2>
 <table>
 	<thead>
 		<tr>
