@@ -10,14 +10,12 @@
     <div class="container">
       <!--BEGIN MASTHEAD-->
       <div class="masthead">
-        <img src="html/psueoc/img/psu_logo.png" alt="Penn State University Logo" href="http://www.psu.edu">
+        <img src="html/psueoc/img/psu_logo.png" alt="Penn State University Logo" width="230px" height="97px" />
         <br>
         <h2>Emergency Operations Capacity Management</h2>
         <br>
       </div>
       <!--END MASTHEAD-->
-      <!--DO NOT REMOVE THIS BREAK UNLESS YOU EDIT CSS AS IT CAUSES FORMATTING ISSUES-->
-      <br>
       <!--START NAV MENU-->
       <nav>
         <ul class="nav nav-justified">
@@ -36,8 +34,6 @@
         </ul>
       </nav>
       <!--END NAV MENU-->
-      <!--SPACE BREAK-->
-      <br>
       <!-- BEGIN WORKING BODY {PHP}-->
       <div class="body2">
 <?php

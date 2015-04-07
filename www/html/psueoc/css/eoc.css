@@ -1,13 +1,13 @@
 img{
 float:left;
-margin: 0 10px 10px 0;
+padding: 5px 20px;
 }
 
 .masthead{
 background-color:#01124B;
 color:#FFFFFF;
 text-align: center;
-padding: 0 10px 10px 0;
+padding: 10px;
 }
 
 body{
@@ -18,10 +18,11 @@ background-color:#d5d5d5;
 background-color:#00124B;
 color:#ffffff;
 text-align:center;
-
 }
 
 .body2{
 background-color:#ffffff;
 color:#000000;
+margin:0;
+padding: 5px 10px;
 }
