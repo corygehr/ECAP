@@ -22,19 +22,16 @@
       <nav>
         <ul class="nav nav-justified">
             <li class="active">
-              <a href="index.html">Home</a>
+              <a href="/">Home</a>
             </li>
             <li>
-              <a href="dashboard.html">System Dashboard</a>
+              <a href="<?php echo \Thinker\Http\Url::create('Dashboard'); ?>">Dashboard</a>
             </li>
             <li>
-              <a href="lotstatus.html">Lot Status</a>
+              <a href="<?php echo \Thinker\Http\Url::create('LotManagement'); ?>">Manage Lots</a>
             </li>
             <li>
-              <a href="spectator.html">Spectator Page</a>
-            </li>
-            <li>
-              <a href="settings.html">System Settings</a>
+              <a href="<?php echo \Thinker\Http\Url::create('SiteManagement'); ?>">Site Management</a>
             </li>      
         </ul>
       </nav>
