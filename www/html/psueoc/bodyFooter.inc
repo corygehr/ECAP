@@ -12,9 +12,10 @@
       <!--BEGIN FOOTER-->
 
       <footer class="footer">
-        <p>Copyright &copy; 2015 Penn State University Emergency Management</p>
-        <p>Site Designed by IST 440W Team 21 Spring 2015</p>
-        <p>Chris Grega, Cory Gehr, Emily Moore, Taylor Dreitlein</p>
+        <p>
+          Copyright &copy; 2015 Penn State University Emergency Management<br>
+          Site Designed by IST 440W Team 21 Spring 2015<br>
+          Chris Grega, Cory Gehr, Emily Moore, Taylor Dreitlein</p>
       </footer>
       <!--END FOOTER-->
     </div>
