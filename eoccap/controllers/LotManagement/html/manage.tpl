@@ -34,7 +34,7 @@
 	</fieldset>
 </form>
 <h2>Existing Lots</h2>
-<table>
+<table id="lot_list" class="tablesorter">
 	<thead>
 		<tr>
 			<th>Lot Name</th>
@@ -56,8 +56,7 @@
 		{
 ?>
 		<tr>
-			<td><a href="
-				<?php echo \Thinker\Html\Url::create('LotConsole', 'manage', array('id' => $lot['id'])); ?>"><?php echo $lot['name']; ?></a></td>
+			<td><a href="<?php echo \Thinker\Http\Url::create('LotConsole', 'manage', array('id' => $lot['id'])); ?>"><?php echo $lot['name']; ?></a></td>
 			<td><?php echo $lot['location_name']; ?></td>
 			<td><?php echo $lot['max_capacity']; ?></td>
 		</tr>
@@ -65,6 +64,13 @@
 		}
 ?>
 	</tbody>
+</table>
+<script type="text/javascript">
+	$(document).ready(function()
+	{
+		$('#lot_list').tablesorter();
+	});
+</script>
 <?php
 	}
 	else
