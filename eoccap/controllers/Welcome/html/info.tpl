@@ -6,7 +6,18 @@
      * @author Cory Gehr
      */
 ?>
-<h1>Penn State Emergency Operations Center - Parking Capacity Management</h1>
+<h1>Parking Lot Readiness Application</h1>
 <p>
-	Welcome!
+	This site is designed to be a resource to the 
+	parking staff of Penn State's Emergency Operations 
+	Center to determine parking lot readiness and 
+	overall status for events.
 </p>
+<p>
+	To begin, please choose the type of user you are 
+	below:
+</p>
+<ul>
+	<li><a href="#">Parking Lot Attendant</a></li>
+	<li><a href="#">Emergency Operations Staff</a></li>
+</ul>
