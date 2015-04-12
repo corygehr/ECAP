@@ -19,16 +19,16 @@
       <!--START NAV MENU-->
       <nav>
         <ul class="nav nav-justified">
-            <li class="active">
-              <a href="/">Home</a>
+            <li<?php echo (SECTION == 'Welcome' ? " class='active'" : ''); ?>>
+              <a href="<?php echo \Thinker\Http\Url::create('Welcome'); ?>">Home</a>
             </li>
-            <li>
+            <li<?php echo (SECTION == 'Dashboard' ? " class='active'" : ''); ?>>
               <a href="<?php echo \Thinker\Http\Url::create('Dashboard'); ?>">Dashboard</a>
             </li>
-            <li>
+            <li<?php echo (SECTION == 'LotManagement' || SECTION == 'LotConsole' ? " class='active'" : ''); ?>>
               <a href="<?php echo \Thinker\Http\Url::create('LotManagement'); ?>">Manage Lots</a>
             </li>
-            <li>
+            <li<?php echo (SECTION == 'SiteManagement' ? " class='active'" : ''); ?>>
               <a href="<?php echo \Thinker\Http\Url::create('SiteManagement'); ?>">Site Management</a>
             </li>      
         </ul>
