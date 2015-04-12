@@ -31,7 +31,38 @@ class LotConsole extends \Thinker\Framework\Controller
 	 */
 	public function manage()
 	{
-		// Load the lot specified
+		// Get Lot ID
+		$lotId = \Thinker\Http\Request::request('id');
+
+		if($lotId)
+		{
+			// Load Object
+			$targetLot = new Lot($lotId);
+
+			if($targetLot)
+			{
+				// Process changes
+				$phase = \Thinker\Http\Request::request('phase');
+
+				switch($phase)
+				{
+
+				}
+
+				// Pass the lot back to the view
+				$this->set('Lot', $targetLot);
+			}
+			else
+			{
+				// Throw error
+				\Thinker\Framework\Notification::push("Failed to retrieve the specified Lot, please try again.", "error");
+			}
+		}
+		else
+		{
+			// Throw error
+			\Thinker\Framework\Notification::push("No Lot ID specified, cannot continue.", "warning");
+		}
 	}
 }
 ?>
