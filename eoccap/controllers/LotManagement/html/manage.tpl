@@ -6,30 +6,35 @@
      * @author Cory Gehr
      */
 ?>
-<h1>Manage Lot</h1>
+<h1>Manage Lots</h1>
 <form method="post">
 	<legend><a href="#" onclick="showHideFieldset()" style="text-decoration: none">Add Lot <span class="expandButton">[+]</span></a></legend>
 	<fieldset class="expandable" style="display:none">
 		<p>
-			<label for="name">Lot Name:</label><br>
-			<input name="name" />
+			<label for="name">Lot Name<span class="required">*</span>:</label><br>
+			<input name="name" required />
 		</p>
 		<p>
 			<label for="color">Lot Color:</label><br>
 			<input name="color" />
 		</p>
 		<p>
-			<label for="location_name">Location Name:</label><br>
-			<input name="location_name" />
+			<label for="max_capacity">Maximum Capacity<span class="required">*</span>:</label><br>
+			<input type="number" name="max_capacity" required />
+		</p>
+		<p>
+			<label for="location_name">Location Name<span class="required">*</span>:</label><br>
+			<input name="location_name" required />
 		</p>
 		<p>
 			<label for="latitude">Latitude:</label><br>
-			<input name="latitude" />
+			<input type="number" name="latitude" step="any" />
 		</p>
 		<p>
 			<label for="longitude">Longitude:</label><br>
-			<input name="longitude" />
+			<input type="number" name="longitude" step="any" />
 		</p>
+		<input type="hidden" name="phase" value="addLot" />
 		<input type="submit" value="Add Lot" />
 	</fieldset>
 </form>

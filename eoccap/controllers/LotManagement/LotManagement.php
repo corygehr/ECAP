@@ -34,6 +34,8 @@ class LotManagement extends \Thinker\Framework\Controller
 		// Get phase
 		$phase = \Thinker\Http\Request::request('phase');
 
+		//die(var_dump($phase));
+
 		switch($phase)
 		{
 			case 'addLot':
@@ -61,11 +63,12 @@ class LotManagement extends \Thinker\Framework\Controller
 		$name = \Thinker\Http\Request::request('name', true);
 		$color = \Thinker\Http\Request::request('color');
 		$location_name = \Thinker\Http\Request::request('location_name', true);
+		$max_capacity = \Thinker\Http\Request::request('max_capacity', true);
 		$latitude = \Thinker\Http\Request::request('latitude');
 		$longitude = \Thinker\Http\Request::request('longitude');
 
 		// Create data array
-		$data = array($name, $color, $location_name, $latitude, $longitude);
+		$data = array($name, $color, $location_name, $latitude, $longitude, $max_capacity);
 
 		// Redirect based on success
 		if(Lot::create($data))
