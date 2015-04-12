@@ -3,7 +3,7 @@ float:left;
 padding: 5px 20px;
 }
 
-p.required{
+span.required{
 	color: red;
 }
 
@@ -57,7 +57,7 @@ th {
 }
 
 tbody tr:nth-of-type(even) {
-	background-color: #337ab7;
+	background-color: #d5d5d5;
 }
 
 table.sortable thead tr th, table.tablesorter tfoot tr th {
@@ -81,7 +81,7 @@ table.sortable thead tr .headerSortDown {
 }
 
 table.sortable thead tr .headerSortDown, table.sortable thead tr .headerSortUp {
-	background-color: #194E88;
+	background-color: #337ab7;;
 }
 
 div.tablesorterPager span {
@@ -102,4 +102,29 @@ div.tablesorterPager input {
 	width: 50px;
 	border: 1px solid #330000;
 	text-align: center;
+}
+
+/* Notifications */
+div.error, 
+div.info, 
+div.success, 
+div.warning {
+	margin-top: 5px;
+	padding: 5px;
+}
+
+div.error {
+	background: #ffaaaa;
+}
+
+div.info {
+	background: #ddddff;
+}
+
+div.success {
+	background: #ddffdd;
+}
+
+div.warning {
+	background: #ECEC61;
 }
