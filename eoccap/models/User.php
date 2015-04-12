@@ -29,9 +29,6 @@ class User
 	{
 		global $_DB;
 
-		// Call the parent constructor
-		parent::__construct();
-
 		// Load the object
 		$query = "SELECT *
 				  FROM users 
