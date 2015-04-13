@@ -132,7 +132,8 @@ class Lot extends \Thinker\Framework\Model
 		global $_DB;
 
 		$query = "SELECT *
-				  FROM lots
+				  FROM lots 
+				  WHERE delete_time IS NULL 
 				  ORDER BY name";
 
 		return $_DB['eoc_cap_mgmt']->doQueryArr($query);
