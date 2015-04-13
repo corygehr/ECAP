@@ -6,10 +6,12 @@
      * @author Cory Gehr
      */
 
-// Get our Lot Object to work with
+// Get our Lot Objects to work with
 $targetLot = $this->get('Lot');
 $targetCapacity = $this->get('Capacity');
 $targetReadiness = $this->get('Readiness');
+$targetStatus = $this->get('Status');
+$possibleStatuses = $this->get('STATUSES');
 
 // Simple function to determine if a select option should read 'selected'
 function selected($val1, $val2)
@@ -43,31 +45,7 @@ if($targetLot)
 			</p>
 			<p>
 				<label for="status">Current Status:</label><br>
-<?php
-	
-	$status = 'Closed';
-	$statusColor = '';
-	
-	switch($status)
-	{
-		case 'Open':
-			$statusColor = 'green';
-		break;
-
-		case 'Closed':
-			$statusColor = 'red';
-		break;
-
-		case 'Limited Access':
-			$statusColor = 'yellow';
-		break;
-
-		default:
-			$statusColor = 'black';
-		break;
-	}
-?>
-				<span style="font-weight:bold;color:<?php echo $statusColor; ?>"><?php echo $status; ?></span>
+				<span style="font-weight:bold;color:<?php echo $targetStatus->Status->color; ?>"><?php echo $targetStatus->Status->name . ($targetStatus->isStale(24) == true ? " (Stale)" : ''); ?></span>
 			</p>
 			<p>
 				<label for="capacity_update">Last Lot Capacity Update:</label><br>
@@ -95,6 +73,87 @@ if($targetLot)
 		<input type="submit" value="Update Capacity" />
 	</fieldset>
 </form>
+<legend id="capacityHistory"><a class="fsLink" onclick="showHideFieldset('capacityHistory')">Capacity History <span class="expandButton">[+]</span></a></legend>
+<fieldset id="capacityHistory" style="display:none">
+	<p>
+		Below are the last ten entries made for this lot:
+	</p>
+	<table id="capacity_history" class="tablesorter">
+		<thead>
+			<tr>
+				<th>Date/Time</th>
+				<th>Capacity</th>
+				<th>Change (from Previous Entry)</th>
+				<th>Recording User</th>
+			</tr>
+		</thead>
+<?php
+	// Get the lots
+	$capacityHistory = $this->get('CAPACITY_HISTORY');
+
+	if($capacityHistory)
+	{
+?>
+	<tbody>
+<?php
+		// Keep track of the current index
+		$count = 0;
+
+		// Output rows
+		foreach($capacityHistory as $history)
+		{
+			// Find out if capacity went up or down from the previous value
+			$prevString = "";
+
+			// Perform checking while we're in bounds of the array
+			if($count+1 < count($capacityHistory))
+			{
+				$ind = $count+1;
+
+				$change = $history['capacity'] - $capacityHistory[$ind]['capacity'];
+
+				if($change < 0)
+				{
+					$prevString = '<span style="font-size:1.25em;font-weight:bold;color:red;">&darr;</span> ' . $change;
+				}
+				elseif($change > 0)
+				{
+					$prevString = '<span style="font-size:1.25em;font-weight:bold;color:green;">&uarr;</span> ' . $change;
+				}
+				else // $capacityHistory[$ind]['attendance'] == $history['attendance']
+				{
+					$prevString = '<b>=</b> 0';
+				}
+			}
+
+?>
+		<tr>
+			<td><?php echo $history['create_time']; ?></td>
+			<td><?php echo $history['capacity']; ?>%</td>
+			<td><?php echo $prevString; ?></td>
+			<td><?php echo $history['create_user_name']; ?></td>
+		</tr>
+<?php
+			// Update counter
+			$count++;
+		}
+?>
+	</tbody>
+</table>
+<?php
+	}
+	else
+	{
+?>
+</table>
+<p>
+	No capacity history found.
+</p>
+<?php
+	}
+?>
+	</table>
+</fieldset>
 <form method="post">
 	<legend id="updateReadiness"><a class="fsLink" onclick="showHideFieldset('updateReadiness')">Complete Lot Readiness Assessment <span class="expandButton"><?php echo ($targetReadiness->isStale() == false ? '[+]' : '[-]'); ?></span></a></legend>
 	<fieldset id="updateReadiness"<?php echo ($targetReadiness->isStale() == false ? ' style="display:none"' : ''); ?>>
@@ -175,90 +234,38 @@ if($targetLot)
 		<input type="submit" value="Complete Readiness Assessment" />
 	</fieldset>
 </form>
-<legend id="capacityHistory"><a class="fsLink" onclick="showHideFieldset('capacityHistory')">Capacity History <span class="expandButton">[+]</span></a></legend>
-<fieldset id="capacityHistory" style="display:none">
-	<p>
-		Below are the last ten entries made for this lot:
-	</p>
-	<table id="capacity_history" class="tablesorter">
-		<thead>
-			<tr>
-				<th>Date/Time</th>
-				<th>Capacity</th>
-				<th>Change (from Previous Entry)</th>
-				<th>Recording User</th>
-			</tr>
-		</thead>
-<?php
-	// Get the lots
-	$capacityHistory = $this->get('CAPACITY_HISTORY');
-
-	if($capacityHistory)
-	{
-?>
-	<tbody>
-<?php
-		// Keep track of the current index
-		$count = 0;
-
-		// Output rows
-		foreach($capacityHistory as $history)
-		{
-			// Find out if capacity went up or down from the previous value
-			$prevString = "";
-
-			// Perform checking while we're in bounds of the array
-			if($count+1 < count($capacityHistory))
-			{
-				$ind = $count+1;
-
-				$change = $history['capacity'] - $capacityHistory[$ind]['capacity'];
-
-				if($change < 0)
-				{
-					$prevString = '<span style="font-size:1.25em;font-weight:bold;color:red;">&darr;</span> ' . $change;
-				}
-				elseif($change > 0)
-				{
-					$prevString = '<span style="font-size:1.25em;font-weight:bold;color:green;">&uarr;</span> ' . $change;
-				}
-				else // $capacityHistory[$ind]['attendance'] == $history['attendance']
-				{
-					$prevString = '<b>=</b> 0';
-				}
-			}
-
-?>
-		<tr>
-			<td><?php echo $history['create_time']; ?></td>
-			<td><?php echo $history['capacity']; ?></td>
-			<td><?php echo $prevString; ?></td>
-			<td><?php echo $history['create_user_name']; ?></td>
-		</tr>
-<?php
-			// Update counter
-			$count++;
-		}
-?>
-	</tbody>
-</table>
-<?php
-	}
-	else
-	{
-?>
-</table>
-<p>
-	No capacity history found.
-</p>
-<?php
-	}
-?>
-	</table>
-</fieldset>
 <form method="post">
-	<legend id="updateDetails"><a class="fsLink" onclick="showHideFieldset('updateDetails')">Update Lot Details <span class="expandButton">[+]</span></a></legend>
-	<fieldset id="updateDetails" style="display:none">
+	<legend id="updateStatus"><a class="fsLink" onclick="showHideFieldset('updateStatus')">Update Lot Status <span class="expandButton">[+]</span></a></legend>
+	<fieldset id="updateStatus" style="display:none">
+		<p>
+			<label for="status">Status<span class="required">*</span>:</label><br>
+			<select name="status" required>
+<?php
+	// Echo status choices and select the current status by default
+	if($possibleStatuses)
+	{
+		foreach($possibleStatuses as $s)
+		{
+?>
+				<option value="<?php echo $s['id']; ?>" <?php echo selected($s['id'], $targetStatus->status_id); ?>><?php echo $s['name']; ?></option>			
+<?php
+		}
+	}
+?>
+			</select>
+		</p>
+		<p>
+			<label for="comment">Comment:</label><br>
+			<textarea name="comment"></textarea>
+		</p>
+		<input type="hidden" name="id" value="<?php echo $targetLot->id; ?>" />
+		<input type="hidden" name="phase" value="updateStatus" />
+		<input type="submit" value="Update Status" />
+	</fieldset>
+</form>
+<form method="post">
+	<legend id="updateInformation"><a class="fsLink" onclick="showHideFieldset('updateInformation')">Update Lot Information <span class="expandButton">[+]</span></a></legend>
+	<fieldset id="updateInformation" style="display:none">
 		<p>
 			<label for="name">Lot Name<span class="required">*</span>:</label><br>
 			<input name="name" value="<?php echo $targetLot->name; ?>" required />
@@ -284,7 +291,7 @@ if($targetLot)
 			<input name="max_capacity" value="<?php echo $targetLot->max_capacity; ?>" required />
 		</p>
 		<input type="hidden" name="id" value="<?php echo $targetLot->id; ?>" />
-		<input type="hidden" name="phase" value="updateDetails" />
+		<input type="hidden" name="phase" value="updateInformation" />
 		<input type="submit" value="Update Details" />
 	</fieldset>
 </form>

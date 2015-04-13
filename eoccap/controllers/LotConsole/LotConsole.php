@@ -62,6 +62,10 @@ class LotConsole extends \Thinker\Framework\Controller
 						$this->updateReadiness();
 					break;
 
+					case 'updateStatus':
+						$this->updateStatus();
+					break;
+
 					case 'capacityUpdateSuccess':
 						\Thinker\Framework\Notification::push("Updated lot capacity successfully!", "success");
 					break;
@@ -73,10 +77,16 @@ class LotConsole extends \Thinker\Framework\Controller
 					case 'readinessUpdateSuccess':
 						\Thinker\Framework\Notification::push("Updated lot readiness successfully!", "success");
 					break;
+
+					case 'statusUpdateSuccess':
+						\Thinker\Framework\Notification::push("Updated lot status successfully!", "success");
+					break;
 				}
 
 				// Pass the lot back to the view
 				$this->set('Lot', $targetLot);
+				$this->set('STATUSES', LotStatus::fetchAll(true));
+				$this->set('Status', LotStatusLog::fetchCurrentLotStatus($targetLot->id));
 				$this->set('Capacity', LotCapacity::fetchCurrentLotCapacity($targetLot->id));
 				$this->set('CAPACITY_HISTORY', LotCapacity::fetchByLot($targetLot->id, 10));
 
@@ -218,6 +228,29 @@ class LotConsole extends \Thinker\Framework\Controller
 		else
 		{
 			\Thinker\Framework\Notification::push("Failed to submit readiness report, please try again.", "error");
+		}
+	}
+
+	/**
+	 * updateStatus()
+	 * Updates lot status information
+	 *
+	 * @access private
+	 */
+	private function updateStatus()
+	{
+		// Get form information
+		$id = \Thinker\Http\Request::post('id', true);
+		$status = \Thinker\Http\Request::post('status', true);
+		$comment = \Thinker\Http\Request::post('comment');
+
+		if(LotStatusLog::create(array($id, $status, $comment)))
+		{
+			\Thinker\Http\Redirect::go('LotConsole', 'manage', array('id' => $id, 'phase' => 'statusUpdateSuccess'));
+		}
+		else
+		{
+			\Thinker\Framework\Notification::push("Failed to create the lot status log, please try again.", "error");
 		}
 	}
 }
