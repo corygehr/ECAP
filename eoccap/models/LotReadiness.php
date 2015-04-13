@@ -120,7 +120,7 @@ class LotReadiness extends \Thinker\Framework\Model
 				  JOIN users u ON u.username = lr.create_user 
 				  JOIN lots l ON l.id = lr.lot_id 
 				  WHERE lr.lot_id = ? 
-				  ORDER BY create_time DESC";
+				  ORDER BY lr.create_time DESC";
 				  
 		$data = array($lotId);
 
