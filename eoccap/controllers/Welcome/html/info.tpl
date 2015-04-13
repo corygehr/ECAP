@@ -18,6 +18,6 @@
 	below:
 </p>
 <ul>
-	<li><a href="#">Parking Lot Attendant</a></li>
-	<li><a href="#">Emergency Operations Staff</a></li>
+	<li><a href="<?php echo \Thinker\Http\Url::create('Login', 'attendant'); ?>">Parking Lot Attendant</a></li>
+	<li><a href="<?php echo \Thinker\Http\Url::create('Login', 'administrator'); ?>">Emergency Operations Staff</a></li>
 </ul>
