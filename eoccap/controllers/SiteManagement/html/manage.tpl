@@ -43,8 +43,12 @@ $lots = $this->get('LOTS');
 ?>
 			</select>
 		</p>
+		<p id="password" style="display:none">
+			<label for="password">Password (only for Administrators)<span class="required">*</span>:</label><br>
+			<input type="password" id="password" name="password" disabled />
+		</p>
 		<p id="lot" style="display:none">
-			<label for="lot">Responsible Lot (only for Attendants):</label><br>
+			<label for="lot">Responsible Lot (only for Attendants)<span class="required">*</span>:</label><br>
 			<select id="lot" name="lot" disabled>
 				<option value="">Select One:</option>
 <?php

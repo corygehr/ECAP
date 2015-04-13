@@ -63,15 +63,16 @@ class SiteManagement extends \Thinker\Framework\Controller
 	{
 		// Gather data
 		$username = \Thinker\Http\Request::post('username', true);
-		$name = \Thinker\Http\Request::post('name', true);
-		$type = \Thinker\Http\Request::post('type', true);
+		$name = \Thinker\Http\Request::post('full_name', true);
+		$type = \Thinker\Http\Request::post('access_type', true);
+		$password = \Thinker\Http\Request::post('password', ($type == 1 ? true : false));
 		$lot = \Thinker\Http\Request::post('lot', ($type == 1 ? false : true));
 
 		// Check for success
-		if(User::create(array($username, $name, $type, $type), $lot))
+		if(User::create(array($username, $name, $type, $type), $password, $lot))
 		{
 			// Redirect for success
-			\Thinker\Http\Url::redirect('SiteManagement', 'manage', array('phase' => 'success'));
+			\Thinker\Http\Redirect::go('SiteManagement', 'manage', array('phase' => 'success'));
 		}
 		else
 		{
