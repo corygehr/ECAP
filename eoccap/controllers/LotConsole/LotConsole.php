@@ -58,6 +58,10 @@ class LotConsole extends \Thinker\Framework\Controller
 						$this->updateDetails();
 					break;
 
+					case 'updateReadiness':
+						$this->updateReadiness();
+					break;
+
 					case 'capacityUpdateSuccess':
 						\Thinker\Framework\Notification::push("Updated lot capacity successfully!", "success");
 					break;
@@ -74,6 +78,7 @@ class LotConsole extends \Thinker\Framework\Controller
 				// Pass the lot back to the view
 				$this->set('Lot', $targetLot);
 				$this->set('Capacity', LotCapacity::fetchCurrentLotCapacity($targetLot->id));
+				$this->set('Readiness', LotReadiness::fetchCurrentLotReadiness($targetLot->id));
 				$this->set('CAPACITY_HISTORY', LotCapacity::fetchByLot($targetLot->id, 10));
 			}
 			else
@@ -172,6 +177,39 @@ class LotConsole extends \Thinker\Framework\Controller
 		}
 
 		\Thinker\Framework\Notification::push("Failed to update the lot, please try again.", "error");
+	}
+
+	/**
+	 * updateReadiness()
+	 * Updates lot readiness information
+	 *
+	 * @access private
+	 */
+	private function updateReadiness()
+	{
+		// Get form data
+		$id = \Thinker\Http\Request::post('id', true);
+		$radios = \Thinker\Http\Request::post('radios');
+		$portajohns = \Thinker\Http\Request::post('portajohns');
+		$aframes = \Thinker\Http\Request::post('aframes');
+		$lighttowers = \Thinker\Http\Request::post('lighttowers');
+		$supervisor = \Thinker\Http\Request::post('supervisor');
+		$parker = \Thinker\Http\Request::post('parker');
+		$sellers = \Thinker\Http\Request::post('sellers');
+		$liaison = \Thinker\Http\Request::post('liaison');
+		$notes = \Thinker\Http\Request::post('notes');
+
+		// Create the entry
+		if(LotReadiness::create(array($id, $radios, $portajohns, $aframes, 
+			$lighttowers, $supervisor, $parker, $sellers, $liaison, $notes)))
+		{
+			// Redirect
+			\Thinker\Http\Redirect::go('LotConsole', 'manage', array('id' => $id, 'phase' => 'readinessUpdateSuccess'));
+		}
+		else
+		{
+			\Thinker\Framework\Notification::push("Failed to submit readiness report, please try again.", "error");
+		}
 	}
 }
 ?>
