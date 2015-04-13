@@ -70,8 +70,12 @@ if($targetLot)
 				<span style="font-weight:bold;color:<?php echo $statusColor; ?>"><?php echo $status; ?></span>
 			</p>
 			<p>
-				<label for="attendance_update">Last Lot Attendance Update:</label><br>
+				<label for="capacity_update">Last Lot Capacity Update:</label><br>
 				<?php echo $targetCapacity->create_time; ?><br>
+			</p>
+			<p>
+				<label for="readiness_create_time">Last Lot Readiness Assessment:</label><br>
+				<?php echo $targetReadiness->create_time; ?><br>
 			</p>
 			<p>
 				<label for="location_name">Last Lot Information Update:</label><br>
