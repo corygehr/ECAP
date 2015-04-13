@@ -58,22 +58,22 @@ if($targetLot)
 <form method="post">
 	<legend id="completeReadiness"><a class="fsLink" onclick="showHideFieldset('completeReadiness')">Update Readiness <span class="expandButton">[+]</span></a></legend>
 	<fieldset id="completeReadiness" style="display:none">
-		
+
 		<input type="hidden" name="id" value="<?php echo $targetLot->id; ?>" />
 		<input type="hidden" name="phase" value="completeReadiness" />
 		<input type="submit" value="Update Readiness" />
 	</fieldset>
 </form>
-<legend id="capacityHistory"><a class="fsLink" onclick="showHideFieldset('capacityHistory')">Attendance History <span class="expandButton">[+]</span></a></legend>
+<legend id="capacityHistory"><a class="fsLink" onclick="showHideFieldset('capacityHistory')">Capacity History <span class="expandButton">[+]</span></a></legend>
 <fieldset id="capacityHistory" style="display:none">
 	<p>
 		Below are the last ten entries made for this lot:
 	</p>
-	<table id="attendance_history" class="tablesorter">
+	<table id="capacity_history" class="tablesorter">
 		<thead>
 			<tr>
 				<th>Date/Time</th>
-				<th>Attendance</th>
+				<th>Capacity</th>
 				<th>Change (from Previous Entry)</th>
 				<th>Recording User</th>
 			</tr>
@@ -219,6 +219,15 @@ if($targetLot->latitude && $targetLot->longitude)
         }
 
         var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions)
+
+        // KML Overlay
+		var kmlUrl = '<?php echo BASE_URL; ?>html/psueoc/assets/psuparking_map.kmz';
+		var kmlOptions = {
+		  suppressInfoWindows: false,
+		  preserveViewport: false,
+		  map: map
+		};
+		var kmlLayer = new google.maps.KmlLayer(kmlUrl, kmlOptions);
 
         var lotMarker = new google.maps.Marker({
 		    position: lotLoc,
