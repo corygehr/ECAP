@@ -45,7 +45,7 @@ if($targetLot)
 			</p>
 			<p>
 				<label for="status">Current Status:</label><br>
-				<span style="font-weight:bold;color:<?php echo $targetStatus->Status->color; ?>"><?php echo $targetStatus->Status->name . ($targetStatus->isStale(24) == true ? " (Stale)" : ''); ?></span>
+				<span style="font-weight:bold;color:#<?php echo $targetStatus->Status->color; ?>"><?php echo $targetStatus->Status->name . ($targetStatus->isStale(24) == true ? " (Stale)" : ''); ?></span>
 			</p>
 			<p>
 				<label for="capacity_update">Last Lot Capacity Update:</label><br>
