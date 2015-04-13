@@ -19,6 +19,7 @@ if($targetLot)
 <h1><?php echo $targetLot->name; ?> Console</h1>
 <legend id="currentInformation"><a class="fsLink" onclick="showHideFieldset('currentInformation')">Current Information <span class="expandButton">[-]</span></a></legend>
 	<fieldset id="currentInformation">
+		<div id="map-canvas" class="gmapsScaleConsole"></div>
 		<span style="float:left">
 			<p>
 				<label for="location_name">Location Name:</label><br>
@@ -41,7 +42,6 @@ if($targetLot)
 				<?php echo $targetLot->update_time; ?><br>
 			</p>
 		</span>
-	<div id="map-canvas" style="float:right; min-width: 380px; height: 350px;"></div>
 </fieldset>
 <form method="post">
 	<legend id="updateCapacity"><a class="fsLink" onclick="showHideFieldset('updateCapacity')">Update Capacity <span class="expandButton">[-]</span></a></legend>
