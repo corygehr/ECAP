@@ -79,8 +79,9 @@ class LotStatusLog extends \Thinker\Framework\Model
 			VALUES(?, ?, ?, ?, NOW())";
 
 		// Add current user to $data
-		$data[] = $_SESSION['USER_ID'];
-
+		//$data[] = $_SESSION['USER_ID'];
+		$data[] = 'cmg5573';
+		
 		if($_DB['eoc_cap_mgmt']->doQuery($query, $data))
 		{
 			// Provide ID of created object
@@ -88,6 +89,62 @@ class LotStatusLog extends \Thinker\Framework\Model
 		}
 
 		return false;
+	}
+
+	/**
+	 * fetchByLot()
+	 * Fetches all lot status data for a specific loc
+	 *
+	 * @access public
+	 * @static
+	 * @param int $lotId Lot ID
+	 * @param int $limit Result Limiter
+	 * @return mixed[] Array of Readiness Data
+	 */
+	public static function fetchByLot($lotId, $limit = null)
+	{
+		global $_DB;
+
+		$query = "SELECT lsl.*, l.name AS lot_name, u.full_name AS create_user_name
+				  FROM lot_status_log lsl 
+				  JOIN users u ON u.username = lsl.create_user 
+				  JOIN lots l ON l.id = lsl.lot_id 
+				  WHERE lsl.lot_id = ? 
+				  ORDER BY lsl.create_time DESC";
+				  
+		$data = array($lotId);
+
+		if($limit)
+		{
+			$query .= " LIMIT $limit";
+		}
+
+		return $_DB['eoc_cap_mgmt']->doQueryArr($query, $data);
+	}
+
+	/**
+	 * fetchCurrentLotStatus()
+	 * Fetches the current status for a lot
+	 *
+	 * @access public
+	 * @static
+	 * @param int $lotId Lot ID
+	 * @return LotStatusLog Status Log Object
+	 */
+	public static function fetchCurrentLotStatus($lotId)
+	{
+		// Use fetchByLot to get data
+		$data = self::fetchByLot($lotId, 1);
+
+		if($data)
+		{
+			return new LotStatusLog($data[0]['id']);
+		}
+		else
+		{
+			// Return empty object
+			return new LotStatusLog();
+		}
 	}
 
 	/**
@@ -100,5 +157,24 @@ class LotStatusLog extends \Thinker\Framework\Model
 	public function isActive()
 	{
 		return !($this->delete_time);
+	}
+
+	/**
+	 * isStale()
+	 * Tells us if the data is stale (over 1 day old)
+	 *
+	 * @access public
+	 * @param int $hourInterval Number of Hours to determine staleness
+	 * @return boolean True if Stale, False if Valid
+	 */
+	public function isStale($hourInterval = 24)
+	{
+		$date1 = new \DateTime($this->create_time);
+		$date2 = new \DateTime(strtotime('Y-m-d H:i:s', time()));
+
+		$diff = $date2->diff($date1);
+
+		$hours = $diff->h;
+		return ($hours + ($diff->days*24)) >= $hourInterval;
 	}
 }
