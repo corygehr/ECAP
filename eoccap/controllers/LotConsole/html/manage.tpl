@@ -221,14 +221,16 @@ if($targetLot->latitude && $targetLot->longitude)
         var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions)
 
         // KML Overlay
-		var kmlUrl = '<?php echo BASE_URL; ?>html/psueoc/assets/psuparking_map.kmz';
+		var kmlUrl = '<?php echo MAPS_KML_URL; ?>';
 		var kmlOptions = {
 		  suppressInfoWindows: false,
-		  preserveViewport: false,
+		  preserveViewport: true,
+		  screenOverlays: true,
 		  map: map
 		};
 		var kmlLayer = new google.maps.KmlLayer(kmlUrl, kmlOptions);
 
+        // Lot information window
         var lotMarker = new google.maps.Marker({
 		    position: lotLoc,
 		    map: map,
@@ -237,7 +239,7 @@ if($targetLot->latitude && $targetLot->longitude)
 
         var contentHtml = '<div id="content">'+
         	'<h4><?php echo $targetLot->name . " (" . $targetLot->location_name . ")"; ?></h4>'+
-        	'<p><b>Current Capacity:</b> <?php echo $targetCapacity->attendance; ?>%</p>'+
+        	'<p><b>Current Capacity:</b> <?php echo $targetCapacity->capacity; ?>%</p>'+
         	'</div>';
 
 		var lotInfo = new google.maps.InfoWindow({

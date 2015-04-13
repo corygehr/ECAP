@@ -14,4 +14,6 @@ define('APP_NAMESPACE', $_APP_CONFIG['general']['namespace']);
 // View Settings
 define('DEFAULT_VIEW', $_APP_CONFIG['view']['default_view']);
 
+// Additional options
+
 ?>
