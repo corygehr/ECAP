@@ -29,7 +29,7 @@ class Lot extends \Thinker\Framework\Model
 	public $CreateUser;
 	public $UpdateUser;
 	public $DeleteUser;
-	
+
 	/**
 	 * __construct()
 	 * Constructor for the Lot class
@@ -114,7 +114,7 @@ class Lot extends \Thinker\Framework\Model
 				  delete_user = :user 
 				  WHERE id = :id 
 				  LIMIT 1";
-		$params = array(':user' => $_SESSION['USER_ID'], ':id' => $this->id);
+		$params = array(':user' => 'cmg5573', ':id' => $this->id);
 
 		return $_DB['eoc_cap_mgmt']->doQuery($query, $params);
 	}
