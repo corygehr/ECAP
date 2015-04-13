@@ -1,14 +1,14 @@
 <?php
 	/**
-	 * models/LotCapacity.php 
-	 * Contains the LotCapacity class
+	 * models/LotAttendance.php 
+	 * Contains the LotAttendance class
 	 *
 	 * @author Cory Gehr
 	 */
 
 namespace EocCap;
 
-class LotCapacity extends \Thinker\Framework\Model
+class LotAttendance extends \Thinker\Framework\Model
 {
 	// Properties
 	public $id;
@@ -23,7 +23,7 @@ class LotCapacity extends \Thinker\Framework\Model
 	
 	/**
 	 * __construct()
-	 * Constructor for the LotCapacity class
+	 * Constructor for the LotAttendance class
 	 *
 	 * @access public
 	 * @param int $id ID of the Object
@@ -37,7 +37,7 @@ class LotCapacity extends \Thinker\Framework\Model
 
 		// Load the object
 		$query = "SELECT *
-				  FROM lot_capacity 
+				  FROM lot_attendance 
 				  WHERE id = :id 
 				  LIMIT 1";
 		$params = array(':id' => $id);
@@ -60,7 +60,7 @@ class LotCapacity extends \Thinker\Framework\Model
 
 	/**
 	 * create()
-	 * Creates a new LotStatus object
+	 * Creates a new LotAttendance object
 	 *
 	 * @access public
 	 * @static
@@ -71,12 +71,13 @@ class LotCapacity extends \Thinker\Framework\Model
 	{
 		global $_DB;
 
-		$query = "INSERT INTO lot_capacity(lot_id, attendance, 
+		$query = "INSERT INTO lot_attendance(lot_id, attendance, 
 			create_user, create_time) 
 			VALUES(?, ?, ?, NOW())";
 
 		// Add current user to $data
-		$data[] = $_SESSION['USER_ID'];
+		//$data[] = $_SESSION['USER_ID'];
+		$data[] = 'cmg5573';
 
 		if($_DB['eoc_cap_mgmt']->doQuery($query, $data))
 		{
