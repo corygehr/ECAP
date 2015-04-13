@@ -36,7 +36,7 @@ class LotConsole extends \Thinker\Framework\Controller
 
 		if($lotId)
 		{
-			// Load Object
+			// Load Objects
 			$targetLot = new Lot($lotId);
 
 			if($targetLot)
@@ -46,11 +46,39 @@ class LotConsole extends \Thinker\Framework\Controller
 
 				switch($phase)
 				{
+					case 'deleteLot':
+						$this->deleteLot();
+					break;
 
+					case 'updateAttendance':
+						$this->updateAttendance();
+					break;
+
+					case 'updateReadiness':
+						$this->updateReadiness();
+					break;
+
+					case 'updateDetails':
+						$this->updateDetails();
+					break;
+
+					case 'attendanceUpdateSuccess':
+						\Thinker\Framework\Notification::push("Updated lot attendance successfully!", "success");
+					break;
+
+					case 'detailUpdateSuccess':
+						\Thinker\Framework\Notification::push("Updated lot details successfully!", "success");
+					break;
+
+					case 'readinessUpdateSuccess':
+						\Thinker\Framework\Notification::push("Updated lot readiness successfully!", "success");
+					break;
 				}
 
 				// Pass the lot back to the view
 				$this->set('Lot', $targetLot);
+				$this->set('Attendance', LotAttendance::fetchCurrentLotAttendance($targetLot->id));
+				$this->set('ATTENDANCE_HISTORY', LotAttendance::fetchByLot($targetLot->id, 10));
 			}
 			else
 			{
@@ -62,6 +90,53 @@ class LotConsole extends \Thinker\Framework\Controller
 		{
 			// Throw error
 			\Thinker\Framework\Notification::push("No Lot ID specified, cannot continue.", "warning");
+		}
+	}
+
+	/**
+	 * deleteLot()
+	 * Deactivates a lot in the database
+	 *
+	 * @access private
+	 */
+	private function deleteLot()
+	{
+		// Get the ID of the lot to deactivate
+		$id = \Thinker\Http\Request::post('id', true);
+
+		// Create the object and invoke delete
+		$tLot = new Lot($id);
+
+		if($tLot->delete())
+		{
+			\Thinker\Http\Redirect::go('LotManagement', 'manage', array('phase' => 'deleteSuccess'));
+		}
+		else
+		{
+			\Thinker\Framework\Notification::push("Failed to delete the lot, please try again.", "error");
+		}
+	}
+
+	/**
+	 * updateAttendance()
+	 * Updates the attendance logs for the current lot
+	 *
+	 * @access private
+	 */
+	private function updateAttendance()
+	{
+		// Get the details
+		$id = \Thinker\Http\Request::post('id', true);
+		$attendance = \Thinker\Http\Request::post('attendance', true);
+
+		// Add the log for the specific lot
+		if(LotAttendance::create(array($id, $attendance)))
+		{
+			\Thinker\Http\Redirect::go('LotConsole', 'manage', array('id' => $id, 'phase' => 'attendanceUpdateSuccess'));
+		}
+		else
+		{
+			\Thinker\Framework\Notification::push("Failed to update the capacity, please try again.", "error");
 		}
 	}
 }

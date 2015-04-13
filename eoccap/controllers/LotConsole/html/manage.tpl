@@ -8,32 +8,49 @@
 
 // Get our Lot Object to work with
 $targetLot = $this->get('Lot');
+$targetAttendance = $this->get('Attendance');
+
 ?>
 <h4><a href="<?php echo \Thinker\Http\Url::create('LotManagement'); ?>">Back to All Lots</a></h4>
 <?php
 if($targetLot)
 {
 ?>
-<h1><?php echo $targetLot->name; ?></h1>
-<fieldset>
-	<legend>Current Information</legend>
-	<label for="location_name">Location Name:</label><br>
-	<?php echo $targetLot->location_name; ?>
+<h1><?php echo $targetLot->name; ?> Console</h1>
+<legend id="currentInformation"><a class="fsLink" onclick="showHideFieldset('currentInformation')">Current Information <span class="expandButton">[-]</span></a></legend>
+	<fieldset id="currentInformation">
+		<span style="float:left">
+			<p>
+				<label for="location_name">Location Name:</label><br>
+				<?php echo $targetLot->location_name; ?>
+			</p>
+			<p>
+				<label for="current_attendance">Current Attendance:</label><br>
+				<?php echo  $targetAttendance->attendance . "/" . $targetLot->max_capacity; ?>
+			</p>
+			<p>
+				<label for="attendance_update">Last Lot Attendance Update:</label><br>
+				<?php echo $targetAttendance->create_time; ?><br>
+			</p>
+			<p>
+				<label for="location_name">Last Lot Information Update:</label><br>
+				<?php echo $targetLot->update_time; ?><br>
+			</p>
+		</span>
+	<div id="map-canvas" style="float:right; min-width: 380px; height: 350px;"></div>
 </fieldset>
-<br>
 <form method="post">
-	<fieldset>
-		<legend>Update Attendance</legend>
+	<legend id="updateAttendance"><a class="fsLink" onclick="showHideFieldset('updateAttendance')">Update Attendance <span class="expandButton">[-]</span></a></legend>
+	<fieldset id="updateAttendance">
 		<p>
-			<label for="current_capacity">Current Attendance<span class="required">*</span>:</label><br>
-			<input type="number" name="current_capacity" value="<?php echo 0; ?>" required />
+			<label for="attendance">Current Attendance<span class="required">*</span>:</label><br>
+			<input type="number" name="attendance" value="<?php echo $targetAttendance->attendance; ?>" required />
 		</p>
 		<input type="hidden" name="id" value="<?php echo $targetLot->id; ?>" />
 		<input type="hidden" name="phase" value="updateAttendance" />
 		<input type="submit" value="Update Attendance" />
 	</fieldset>
 </form>
-<br>
 <form method="post">
 	<legend id="updateReadiness"><a class="fsLink" onclick="showHideFieldset('updateReadiness')">Update Readiness <span class="expandButton">[+]</span></a></legend>
 	<fieldset id="updateReadiness" style="display:none">
@@ -62,10 +79,59 @@ if($targetLot)
 		<input type="submit" value="Update Readiness" />
 	</fieldset>
 </form>
-<br>
+<legend id="attendanceHistory"><a class="fsLink" onclick="showHideFieldset('attendanceHistory')">Attendance History <span class="expandButton">[+]</span></a></legend>
+<fieldset id="attendanceHistory" style="display:none">
+	<p>
+		Below are the last ten entries made for this lot:
+	</p>
+	<table id="attendance_history" class="tablesorter">
+		<thead>
+			<tr>
+				<th>Date/Time</th>
+				<th>Attendance</th>
+				<th>Recording User</th>
+			</tr>
+		</thead>
+<?php
+	// Get the lots
+	$attendanceHistory = $this->get('ATTENDANCE_HISTORY');
+
+	if($attendanceHistory)
+	{
+?>
+	<tbody>
+<?php
+		// Output rows
+		foreach($attendanceHistory as $history)
+		{
+?>
+		<tr>
+			<td><?php echo $history['create_time']; ?></td>
+			<td><?php echo $history['attendance']; ?></td>
+			<td><?php echo $history['create_user_name']; ?></td>
+		</tr>
+<?php
+		}
+?>
+	</tbody>
+</table>
+<?php
+	}
+	else
+	{
+?>
+</table>
+<p>
+	No attendance history found.
+</p>
+<?php
+	}
+?>
+	</table>
+</fieldset>
 <form method="post">
-	<legend id="updateInformation"><a class="fsLink" onclick="showHideFieldset('updateInformation')">Update Lot Information <span class="expandButton">[+]</span></a></legend>
-	<fieldset id="updateInformation" style="display:none">
+	<legend id="updateDetails"><a class="fsLink" onclick="showHideFieldset('updateDetails')">Update Lot Details <span class="expandButton">[+]</span></a></legend>
+	<fieldset id="updateDetails" style="display:none">
 		<p>
 			<label for="name">Lot Name<span class="required">*</span>:</label><br>
 			<input name="name" value="<?php echo $targetLot->name; ?>" required />
@@ -83,12 +149,11 @@ if($targetLot)
 			<input type="number" step="any" name="longitude" value="<?php echo $targetLot->longitude; ?>" />
 		</p>
 		<input type="hidden" name="id" value="<?php echo $targetLot->id; ?>" />
-		<input type="hidden" name="phase" value="updateInformation" />
-		<input type="submit" value="Update Information" />
+		<input type="hidden" name="phase" value="updateDetails" />
+		<input type="submit" value="Update Details" />
 	</fieldset>
 </form>
-<br>
-<form method="post">
+<form id="deleteLot" method="post">
 	<legend id="deleteLot"><a class="fsLink" onclick="showHideFieldset('deleteLot')">Delete Lot <span class="expandButton">[+]</span></a></legend>
 	<fieldset id="deleteLot" style="display:none">
 		<p>
@@ -108,6 +173,53 @@ else
 <p>
 	No lot information to load.
 </p>
+<?php
+}
+?>
+<script src="html/psueoc/js/LotConsole/manage.js"></script>
+<?php
+// Output Google Maps if we have lat+lng info
+if($targetLot->latitude && $targetLot->longitude)
+{
+?>
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<script type="text/javascript">
+	// Google Maps
+	function initialize() {
+        var lotLoc = new google.maps.LatLng(<?php echo $targetLot->latitude . "," . $targetLot->longitude; ?>);
+
+        var mapOptions = {
+          center: lotLoc,
+          zoom: 10,
+          mapTypeId: google.maps.MapTypeId.HYBRID
+        }
+
+        var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions)
+
+        var lotMarker = new google.maps.Marker({
+		    position: lotLoc,
+		    map: map,
+		    title: "<?php echo $targetLot->name; ?>"
+		});
+
+        var contentHtml = '<div id="content">'+
+        	'<h4><?php echo $targetLot->name . " (" . $targetLot->location_name . ")"; ?></h4>'+
+        	'<p><b>Current Attendance:</b> <?php echo $targetAttendance->attendance . "/" . $targetLot->max_capacity; ?></p>'+
+        	'</div>';
+
+		var lotInfo = new google.maps.InfoWindow({
+      		content: contentHtml
+ 		});
+
+		google.maps.event.addListener(lotMarker, 'click', function() {
+    		lotInfo.open(map,lotMarker);
+  		});
+
+  		lotInfo.open(map,lotMarker);
+	}
+
+	google.maps.event.addDomListener(window, 'load', initialize);
+</script>
 <?php
 }
 ?>
