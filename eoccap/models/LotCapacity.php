@@ -151,16 +151,4 @@ class LotCapacity extends \Thinker\Framework\Model
 			return new LotCapacity();
 		}
 	}
-
-	/**
-	 * isActive()
-	 * Returns true if the current object is active
-	 *
-	 * @access public
-	 * @return bool True if Active, False if not
-	 */
-	public function isActive()
-	{
-		return !($this->delete_time);
-	}
 }
