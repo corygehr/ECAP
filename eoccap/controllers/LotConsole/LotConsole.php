@@ -78,8 +78,17 @@ class LotConsole extends \Thinker\Framework\Controller
 				// Pass the lot back to the view
 				$this->set('Lot', $targetLot);
 				$this->set('Capacity', LotCapacity::fetchCurrentLotCapacity($targetLot->id));
-				$this->set('Readiness', LotReadiness::fetchCurrentLotReadiness($targetLot->id));
 				$this->set('CAPACITY_HISTORY', LotCapacity::fetchByLot($targetLot->id, 10));
+
+				$currentReadiness = LotReadiness::fetchCurrentLotReadiness($targetLot->id);
+
+				// If the current readiness is stale, we want to force creation of a new one
+				if($currentReadiness->isStale())
+				{
+					$currentReadiness = new LotReadiness();
+				}
+
+				$this->set('Readiness', $currentReadiness);
 			}
 			else
 			{

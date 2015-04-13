@@ -9,6 +9,18 @@
 // Get our Lot Object to work with
 $targetLot = $this->get('Lot');
 $targetCapacity = $this->get('Capacity');
+$targetReadiness = $this->get('Readiness');
+
+// Simple function to determine if a select option should read 'selected'
+function selected($val1, $val2)
+{
+	if($val1 === $val2)
+	{
+		return "selected";
+	}
+
+	return null;
+}
 
 ?>
 <h4><a href="<?php echo \Thinker\Http\Url::create('LotManagement'); ?>">Back to All Lots</a></h4>
@@ -80,12 +92,83 @@ if($targetLot)
 	</fieldset>
 </form>
 <form method="post">
-	<legend id="completeReadiness"><a class="fsLink" onclick="showHideFieldset('completeReadiness')">Update Readiness <span class="expandButton">[+]</span></a></legend>
-	<fieldset id="completeReadiness" style="display:none">
-
+	<legend id="updateReadiness"><a class="fsLink" onclick="showHideFieldset('updateReadiness')">Complete Lot Readiness Assessment <span class="expandButton"><?php echo ($targetReadiness->isStale() == false ? '[+]' : '[-]'); ?></span></a></legend>
+	<fieldset id="updateReadiness"<?php echo ($targetReadiness->isStale() == false ? ' style="display:none"' : ''); ?>>
+		<p>
+			<label for="last_create_time">Last Completion Date/Time:</label><br>
+			<?php echo $targetReadiness->create_time; ?>
+		</p>
+		<p>
+			<label for="radios">Radios:</a></label><br>
+			<select name="radios">
+				<option value="">Select One:</option>
+				<option value="1" <?php echo selected("1", $targetReadiness->radios); ?>>Ready</option>
+				<option value="0" <?php echo selected("0", $targetReadiness->radios); ?>>Not Ready</option>
+			</select>
+		</p>
+		<p>
+			<label for="portajohns">Porta-Johns:</a></label><br>
+			<select name="portajohns">
+				<option value="">Select One:</option>
+				<option value="1" <?php echo selected("1", $targetReadiness->portajohns); ?>>Ready</option>
+				<option value="0" <?php echo selected("0", $targetReadiness->portajohns); ?>>Not Ready</option>
+			</select>
+		</p>
+		<p>
+			<label for="aframes">A-Frames:</a></label><br>
+			<select name="aframes">
+				<option value="">Select One:</option>
+				<option value="1" <?php echo selected("1", $targetReadiness->aframes); ?>>Ready</option>
+				<option value="0" <?php echo selected("0", $targetReadiness->aframes); ?>>Not Ready</option>
+			</select>
+		</p>
+		<p>
+			<label for="lighttowers">Light Towers:</a></label><br>
+			<select name="lighttowers">
+				<option value="">Select One:</option>
+				<option value="1" <?php echo selected("1", $targetReadiness->lighttowers); ?>>Ready</option>
+				<option value="0" <?php echo selected("0", $targetReadiness->lighttowers); ?>>Not Ready</option>
+			</select>
+		</p>
+		<p>
+			<label for="supervisor">Lot Supervisor:</a></label><br>
+			<select name="supervisor">
+				<option value="">Select One:</option>
+				<option value="1" <?php echo selected("1", $targetReadiness->supervisor); ?>>Ready</option>
+				<option value="0" <?php echo selected("0", $targetReadiness->supervisor); ?>>Not Ready</option>
+			</select>
+		</p>
+		<p>
+			<label for="parker">Lot Parker:</a></label><br>
+			<select name="parker">
+				<option value="">Select One:</option>
+				<option value="1" <?php echo selected("1", $targetReadiness->parker); ?>>Ready</option>
+				<option value="0" <?php echo selected("0", $targetReadiness->parker); ?>>Not Ready</option>
+			</select>
+		</p>
+		<p>
+			<label for="sellers">Seller(s):</a></label><br>
+			<select name="sellers">
+				<option value="">Select One:</option>
+				<option value="1" <?php echo selected("1", $targetReadiness->sellers); ?>>Ready</option>
+				<option value="0" <?php echo selected("0", $targetReadiness->sellers); ?>>Not Ready</option>
+			</select>
+		</p>
+		<p>
+			<label for="liaison">Parking Liaison:</a></label><br>
+			<select name="liaison">
+				<option value="">Select One:</option>
+				<option value="1" <?php echo selected("1", $targetReadiness->liaison); ?>>Ready</option>
+				<option value="0" <?php echo selected("0", $targetReadiness->liaison); ?>>Not Ready</option>
+			</select>
+		</p>
+		<p>
+			<label for="notes">Notes:</a></label><br>
+			<textarea name="notes"><?php echo $targetReadiness->notes; ?></textarea>
+		</p>
 		<input type="hidden" name="id" value="<?php echo $targetLot->id; ?>" />
-		<input type="hidden" name="phase" value="completeReadiness" />
-		<input type="submit" value="Update Readiness" />
+		<input type="hidden" name="phase" value="updateReadiness" />
+		<input type="submit" value="Complete Readiness Assessment" />
 	</fieldset>
 </form>
 <legend id="capacityHistory"><a class="fsLink" onclick="showHideFieldset('capacityHistory')">Capacity History <span class="expandButton">[+]</span></a></legend>

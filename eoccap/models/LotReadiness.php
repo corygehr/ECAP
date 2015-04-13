@@ -21,6 +21,7 @@ class LotReadiness extends \Thinker\Framework\Model
 	public $parker;
 	public $sellers;
 	public $liaison;
+	public $notes;
 	public $create_user;
 	public $create_time;
 
@@ -63,6 +64,10 @@ class LotReadiness extends \Thinker\Framework\Model
 			$this->Lot = new Lot($this->lot_id);
 			$this->CreateUser = new User($this->create_user);
 		}
+		else
+		{
+			$this->create_time = "0000-00-00 00:00:00";
+		}
 	}
 
 	/**
@@ -80,8 +85,8 @@ class LotReadiness extends \Thinker\Framework\Model
 
 		$query = "INSERT INTO lot_readiness(lot_id, radios, portajohns, 
 			aframes, lighttowers, supervisor, parker, sellers, liaison, 
-			create_user, create_time) 
-			VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+			notes, create_user, create_time) 
+			VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
 
 		// Add current user to $data
 		//$data[] = $_SESSION['USER_ID'];
@@ -97,21 +102,77 @@ class LotReadiness extends \Thinker\Framework\Model
 	}
 
 	/**
-	 * findAll()
-	 * Fetches all objects of this type
+	 * fetchByLot()
+	 * Fetches all lot readiness data for a specific loc
 	 *
 	 * @access public
 	 * @static
-	 * @return mixed[] Array of LotReadiness results
+	 * @param int $lotId Lot ID
+	 * @param int $limit Result Limiter
+	 * @return mixed[] Array of Readiness Data
 	 */
-	public static function findAll()
+	public static function fetchByLot($lotId, $limit = null)
 	{
 		global $_DB;
 
-		$query = "SELECT *
-				  FROM lot_readiness  
+		$query = "SELECT lr.*, l.name AS lot_name, u.full_name AS create_user_name
+				  FROM lot_readiness lr 
+				  JOIN users u ON u.username = lr.create_user 
+				  JOIN lots l ON l.id = lr.lot_id 
+				  WHERE lr.lot_id = ? 
 				  ORDER BY create_time DESC";
+				  
+		$data = array($lotId);
 
-		return $_DB['eoc_cap_mgmt']->doQueryArr($query);
+		if($limit)
+		{
+			$query .= " LIMIT $limit";
+		}
+
+		return $_DB['eoc_cap_mgmt']->doQueryArr($query, $data);
+	}
+
+	/**
+	 * fetchCurrentLotReadiness()
+	 * Fetches the current readiness for a lot
+	 *
+	 * @access public
+	 * @static
+	 * @param int $lotId Lot ID
+	 * @return LotReadiness Readiness Object
+	 */
+	public static function fetchCurrentLotReadiness($lotId)
+	{
+		// Use fetchByLot to get data
+		$data = self::fetchByLot($lotId, 1);
+
+		if($data)
+		{
+			return new LotReadiness($data[0]['id']);
+		}
+		else
+		{
+			// Return empty object
+			return new LotReadiness();
+		}
+	}
+
+	/**
+	 * isStale()
+	 * Tells us if the data is stale (over 1 day old)
+	 *
+	 * @access public
+	 * @param int $hourInterval Number of Hours to determine staleness
+	 * @return boolean True if Stale, False if Valid
+	 */
+	public function isStale($hourInterval = 24)
+	{
+		$date1 = new \DateTime($this->create_time);
+		$date2 = new \DateTime(strtotime('Y-m-d H:i:s', time()));
+
+		$diff = $date2->diff($date1);
+
+		$hours = $diff->h;
+		return ($hours + ($diff->days*24)) >= $hourInterval;
 	}
 }
