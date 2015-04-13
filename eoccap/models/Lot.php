@@ -163,16 +163,25 @@ class Lot extends \Thinker\Framework\Model
 		global $_DB;
 
 		$query = "UPDATE lots
-				  SET name = :name,
-				  color = :color, 
-				  location_name = :location_name, 
-				  latitude = :latitude, 
-				  longitude = :longitude, 
-				  max_capacity = :max_capacity, 
-				  update_user = :user 
-				  WHERE id = :id 
+				  SET name = ?,
+				  color = ?, 
+				  location_name = ?, 
+				  latitude = ?, 
+				  longitude = ?, 
+				  max_capacity = ?, 
+				  update_user = ? 
+				  WHERE id = ? 
 				  LIMIT 1";
 
-		return $_DB['eoc_lot_mgmt']->doQuery($query, $this->toArray() + array('user' => $_SESSION['USER_ID']));
+		return $_DB['eoc_cap_mgmt']->doQuery($query, 
+			array(
+				$this->name,
+				$this->color,
+				$this->location_name,
+				$this->latitude,
+				$this->longitude,
+				$this->max_capacity,
+				'cmg5573',
+				$this->id));
 	}
 }
