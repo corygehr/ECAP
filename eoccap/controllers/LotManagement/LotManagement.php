@@ -42,8 +42,12 @@ class LotManagement extends \Thinker\Framework\Controller
 				$this->addLot();
 			break;
 
-			case 'success':
-				\Thinker\Framework\Notification::push("Added lot successfully!", "success");
+			case 'addSuccess':
+				\Thinker\Framework\Notification::push("Added the lot successfully!", "success");
+			break;
+
+			case 'deleteSuccess':
+				\Thinker\Framework\Notification::push("Delete the lot successfully!", "success");
 			break;
 		}
 
@@ -73,7 +77,7 @@ class LotManagement extends \Thinker\Framework\Controller
 		// Redirect based on success
 		if(Lot::create($data))
 		{
-			\Thinker\Http\Redirect::go('LotManagement', 'manage', array('phase' => 'success'));
+			\Thinker\Http\Redirect::go('LotManagement', 'manage', array('phase' => 'addSuccess'));
 		}
 		else
 		{
