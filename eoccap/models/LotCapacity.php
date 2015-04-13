@@ -1,19 +1,19 @@
 <?php
 	/**
-	 * models/LotAttendance.php 
-	 * Contains the LotAttendance class
+	 * models/LotCapacity.php 
+	 * Contains the LotCapacity class
 	 *
 	 * @author Cory Gehr
 	 */
 
 namespace EocCap;
 
-class LotAttendance extends \Thinker\Framework\Model
+class LotCapacity extends \Thinker\Framework\Model
 {
 	// Properties
 	public $id;
 	public $lot_id;
-	public $attendance;
+	public $capacity;
 	public $create_user;
 	public $create_time;
 
@@ -23,7 +23,7 @@ class LotAttendance extends \Thinker\Framework\Model
 	
 	/**
 	 * __construct()
-	 * Constructor for the LotAttendance class
+	 * Constructor for the LotCapacity class
 	 *
 	 * @access public
 	 * @param int $id ID of the Object
@@ -37,7 +37,7 @@ class LotAttendance extends \Thinker\Framework\Model
 
 		// Load the object
 		$query = "SELECT *
-				  FROM lot_attendance 
+				  FROM lot_capacity 
 				  WHERE id = :id 
 				  LIMIT 1";
 		$params = array(':id' => $id);
@@ -61,14 +61,14 @@ class LotAttendance extends \Thinker\Framework\Model
 			// Create empty object
 			$this->id = 0;
 			$this->lot_id = 0;
-			$this->attendance = "NaN";
+			$this->capacity = "NaN";
 			$this->create_time = "0000-00-00 00:00:00";
 		}
 	}
 
 	/**
 	 * create()
-	 * Creates a new LotAttendance object
+	 * Creates a new LotCapacity object
 	 *
 	 * @access public
 	 * @static
@@ -79,7 +79,7 @@ class LotAttendance extends \Thinker\Framework\Model
 	{
 		global $_DB;
 
-		$query = "INSERT INTO lot_attendance(lot_id, attendance, 
+		$query = "INSERT INTO lot_capacity(lot_id, capacity, 
 			create_user, create_time) 
 			VALUES(?, ?, ?, NOW())";
 
@@ -111,7 +111,7 @@ class LotAttendance extends \Thinker\Framework\Model
 		global $_DB;
 
 		$query = "SELECT la.*, l.name AS lot_name, u.full_name AS create_user_name
-				  FROM lot_attendance la 
+				  FROM lot_capacity la 
 				  JOIN users u ON u.username = la.create_user 
 				  JOIN lots l ON l.id = la.lot_id 
 				  WHERE la.lot_id = ? 
@@ -128,27 +128,27 @@ class LotAttendance extends \Thinker\Framework\Model
 	}
 
 	/**
-	 * fetchCurrentLotAttendance()
-	 * Fetches the current attendance for a lot
+	 * fetchCurrentLotCapacity()
+	 * Fetches the current capacity for a lot
 	 *
 	 * @access public
 	 * @static
 	 * @param int $lotId Lot ID
-	 * @return LotAttendance Attendance Object
+	 * @return LotCapacity Attendance Object
 	 */
-	public static function fetchCurrentLotAttendance($lotId)
+	public static function fetchCurrentLotCapacity($lotId)
 	{
 		// Use fetchByLot to get data
 		$data = self::fetchByLot($lotId, 1);
 
 		if($data)
 		{
-			return new LotAttendance($data[0]['id']);
+			return new LotCapacity($data[0]['id']);
 		}
 		else
 		{
 			// Return empty object
-			return new LotAttendance();
+			return new LotCapacity();
 		}
 	}
 

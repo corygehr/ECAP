@@ -12,7 +12,7 @@
       <div class="masthead">
         <img src="html/psueoc/img/psu_logo.png" alt="Penn State University Logo" width="230px" height="97px" />
         <br>
-        <h2>Emergency Operations Capacity Management</h2>
+        <h2>Penn State Event Parking Management</h2>
         <br>
       </div>
       <!--END MASTHEAD-->

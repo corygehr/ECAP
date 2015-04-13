@@ -1,14 +1,14 @@
 <?php
 	/**
-	 * LotInfo.php
-	 * Contains the Class for the LotInfo Controller
+	 * Logout.php
+	 * Contains the Class for the Logout Controller
 	 *
 	 * @author Cory Gehr
 	 */
 
 namespace EocCap;
 
-class LotInfo extends \Thinker\Framework\Controller
+class Logout extends \Thinker\Framework\Controller
 {
 	/**
 	 * defaultSubsection()
@@ -20,18 +20,21 @@ class LotInfo extends \Thinker\Framework\Controller
 	 */
 	public static function defaultSubsection()
 	{
-		return 'view';
+		return 'do';
 	}
 
 	/**
-	 * view()
-	 * Passes data back for the 'view' subsection
+	 * do()
+	 * Handles the logout for the current user
 	 *
 	 * @access public
 	 */
-	public function view()
+	public function do()
 	{
+		// Process logout
 
+		// Redirect
+		\Thinker\Http\Redirect::go('Welcome');
 	}
 }
 ?>

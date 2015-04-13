@@ -18,6 +18,8 @@ class LocalAuth extends Thinker\Framework\Session
 	{
 		// Call parent constructor
 		parent::__construct();
+
+		// Create user object
 	}
 
 	/**
