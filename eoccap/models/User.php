@@ -12,7 +12,8 @@ class User
 {
 	// Properties
 	public $username;
-	public $type;
+	public $account_type;
+	public $user_class;
 	public $full_name;
 	public $create_date;
 	public $update_date;
@@ -55,20 +56,36 @@ class User
 	 * @access public
 	 * @static
 	 * @param mixed[] $data Data to commit
-	 * @return string ID of New Object
+	 * @param int $lotId Lot ID to give access to
+	 * @return boolean Status of Transaction
 	 */
-	public static function create($data)
+	public static function create($data, $lotId = null)
 	{
 		global $_DB;
 
-		$query = "INSERT INTO users(username, type, full_name, 
-			create_date) 
-			VALUES(?, ?, ?, NOW())";
-
-		if($_DB['eoc_cap_mgmt']->doQuery($query, $data))
+		// Begin a transaction
+		if($_DB['eoc_cap_mgmt']->beginTransaction())
 		{
-			// Provide ID of created object
-			return $_DB['eoc_cap_mgmt']->lastInsertId();
+			// Add the user
+			$query = "INSERT INTO users(username, full_name, account_type, user_class, 
+				create_date) 
+				VALUES(?, ?, ?, ?, NOW())";
+
+			// Check for an error
+			if(!$_DB['eoc_cap_mgmt']->doQuery($query, $data))
+			{
+				return false;
+			}
+
+			// Add permissions based on the user type
+			if($data[2] == 1)
+			{
+				// Add permissions for an Administrator
+			}
+			else
+			{
+				// Add permissions based on Lot Attendant permissions
+			}
 		}
 
 		return false;
@@ -95,6 +112,66 @@ class User
 	}
 
 	/**
+	 * fetchAll()
+	 * Fetches all users in the database
+	 *
+	 * @access public
+	 * @static
+	 * @return mixed[] List of Users
+	 */
+	public static function fetchAll()
+	{
+		global $_DB;
+
+		$query = "SELECT u.*, at.name AS account_type_name, 
+				  ut.name AS user_type_name
+				  FROM users u 
+				  JOIN account_types at ON at.id = u.account_type 
+				  JOIN user_types ut ON ut.id = u.user_type 
+				  ORDER BY u.username";
+
+		return $_DB['eoc_cap_mgmt']->doQueryArr($query);
+	}
+
+	/**
+	 * getAccountTypes()
+	 * Gets a list of all possible account types
+	 *
+	 * @access public
+	 * @static
+	 * @return string[] List of Account Types
+	 */
+	public static function getAccountTypes()
+	{
+		global $_DB;
+
+		$query = "SELECT id, name 
+				  FROM account_types 
+				  ORDER BY name";
+
+		return $_DB['eoc_cap_mgmt']->doQueryArr($query);
+	}
+
+	/**
+	 * getUserTypes()
+	 * Gets a list of all possible user types
+	 *
+	 * @access public
+	 * @static
+	 * @return string[] List of User Types
+	 */
+	public static function getUserTypes()
+	{
+		global $_DB;
+
+		$query = "SELECT id, name 
+				  FROM user_types 
+				  ORDER BY name";
+
+		return $_DB['eoc_cap_mgmt']->doQueryArr($query);
+	}
+
+	/**
 	 * isActive()
 	 * Returns true if the current object is active
 	 *
@@ -118,7 +195,7 @@ class User
 		global $_DB;
 
 		$query = "UPDATE users
-				  SET type = :type,
+				  SET account_type = :type, 
 				  full_name = :full_name 
 				  WHERE username = :username 
 				  LIMIT 1";
