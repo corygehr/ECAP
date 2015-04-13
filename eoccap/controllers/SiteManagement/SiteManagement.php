@@ -31,7 +31,8 @@ class SiteManagement extends \Thinker\Framework\Controller
 	 */
 	public function manage()
 	{
-
+		// Provide form with all lots
+		$this->set('LOTS', Lot::findAll());
 	}
 }
 ?>

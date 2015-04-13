@@ -8,8 +8,8 @@
 ?>
 <h1>Manage Lots</h1>
 <form method="post">
-	<legend><a href="#" onclick="showHideFieldset()" style="text-decoration: none">Add Lot <span class="expandButton">[+]</span></a></legend>
-	<fieldset class="expandable" style="display:none">
+	<legend id="addLot"><a class="fsLink" onclick="showHideFieldset('addLot')">Add Lot <span class="expandButton">[+]</span></a></legend>
+	<fieldset id="addLot" style="display:none">
 		<p>
 			<label for="name">Lot Name<span class="required">*</span>:</label><br>
 			<input name="name" required />
@@ -70,12 +70,6 @@
 ?>
 	</tbody>
 </table>
-<script type="text/javascript">
-	$(document).ready(function()
-	{
-		$('#lot_list').tablesorter();
-	});
-</script>
 <script type="text/javascript" src="html/psueoc/js/LotManagement/manage.js"></script>
 <?php
 	}
