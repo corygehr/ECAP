@@ -38,7 +38,7 @@
 		<input type="submit" value="Add Lot" />
 	</fieldset>
 </form>
-<h2>Existing Lots</h2>
+<legend>Existing Lots</legend>
 <table id="lot_list" class="tablesorter">
 	<thead>
 		<tr>
@@ -70,7 +70,6 @@
 ?>
 	</tbody>
 </table>
-<script type="text/javascript" src="html/psueoc/js/LotManagement/manage.js"></script>
 <?php
 	}
 	else
@@ -83,3 +82,4 @@
 <?php
 	}
 ?>
+<script type="text/javascript" src="html/psueoc/js/LotManagement/manage.js"></script>
