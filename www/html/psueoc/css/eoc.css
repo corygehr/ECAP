@@ -114,12 +114,16 @@ div.tablesorterPager input {
 }
 
 /* Notifications */
+div.notification p {
+	margin: 0;
+	padding: 10px;
+}
+
 div.error, 
 div.info, 
 div.success, 
 div.warning {
 	margin-top: 5px;
-	padding: 5px;
 }
 
 div.error {
