@@ -31,7 +31,31 @@ if($targetLot)
 			</p>
 			<p>
 				<label for="status">Current Status:</label><br>
-				<?php echo "Open"; ?>
+<?php
+	
+	$status = 'Closed';
+	$statusColor = '';
+	
+	switch($status)
+	{
+		case 'Open':
+			$statusColor = 'green';
+		break;
+
+		case 'Closed':
+			$statusColor = 'red';
+		break;
+
+		case 'Limited Access':
+			$statusColor = 'yellow';
+		break;
+
+		default:
+			$statusColor = 'black';
+		break;
+	}
+?>
+				<span style="font-weight:bold;color:<?php echo $statusColor; ?>"><?php echo $status; ?></span>
 			</p>
 			<p>
 				<label for="attendance_update">Last Lot Attendance Update:</label><br>
@@ -200,6 +224,15 @@ else
 <?php
 }
 ?>
+<legend id="contactInformation"><a class="fsLink" onclick="showHideFieldset('contactInformation')">Contact Information <span class="expandButton">[+]</span></a></legend>
+<fieldset id="contactInformation" style="display:none">
+	<ul>
+		<li><b>Emergency:</b> 814-863-1111</li>
+		<li><b>Stadium Operations:</b> 814-863-1548 or 814-863-15409</li>
+		<li><b>Customer Service:</b> 1-800-NITTANY</li>
+		<li><b>Text Hotline:</b> Text to 69050 the word NITTANY followed by your name and location. Stadium personnel will respond</li>
+	</ul>
+</fieldset>
 <script src="html/psueoc/js/LotConsole/manage.js"></script>
 <?php
 // Output Google Maps if we have lat+lng info
