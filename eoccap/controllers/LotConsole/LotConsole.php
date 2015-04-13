@@ -139,5 +139,43 @@ class LotConsole extends \Thinker\Framework\Controller
 			\Thinker\Framework\Notification::push("Failed to update the capacity, please try again.", "error");
 		}
 	}
+
+	/**
+	 * updateDetails()
+	 * Updates Lot Basic Information
+	 *
+	 * @access private
+	 */
+	private function updateDetails()
+	{
+		// Get information
+		$id = \Thinker\Http\Request::post('id', true);
+		$color = \Thinker\Http\Request::post('color');
+		$location_name = \Thinker\Http\Request::post('location_name', true);
+		$latitude = \Thinker\Http\Request::post('latitude');
+		$longitude = \Thinker\Http\Request::post('longitude');
+		$max_capacity = \Thinker\Http\Request::post('max_capacity', true);
+
+		// Create object for lot
+		$target = new Lot($id);
+
+		if($target)
+		{
+			// Update properties
+			$target->color = $color;
+			$target->location_name = $location_name;
+			$target->latitude = $latitude;
+			$target->longitude = $longitude;
+			$target->max_capacity = $max_capacity;
+
+			// Invoke object update
+			if($target->update())
+			{
+				\Thinker\Http\Redirect::go('LotConsole', 'manage', array('id' => $id, 'phase' => 'detailUpdateSuccess'));
+			}
+		}
+
+		\Thinker\Framework\Notification::push("Failed to update the lot, please try again.", "error");
+	}
 }
 ?>

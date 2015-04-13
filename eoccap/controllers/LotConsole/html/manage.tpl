@@ -29,6 +29,10 @@ if($targetLot)
 				<?php echo  $targetAttendance->attendance . "/" . $targetLot->max_capacity; ?>
 			</p>
 			<p>
+				<label for="status">Current Status:</label><br>
+				<?php echo "Open"; ?>
+			</p>
+			<p>
 				<label for="attendance_update">Last Lot Attendance Update:</label><br>
 				<?php echo $targetAttendance->create_time; ?><br>
 			</p>
@@ -89,6 +93,7 @@ if($targetLot)
 			<tr>
 				<th>Date/Time</th>
 				<th>Attendance</th>
+				<th>Change (from Previous Entry)</th>
 				<th>Recording User</th>
 			</tr>
 		</thead>
@@ -101,16 +106,46 @@ if($targetLot)
 ?>
 	<tbody>
 <?php
+		// Keep track of the current index
+		$count = 0;
+
 		// Output rows
 		foreach($attendanceHistory as $history)
 		{
+			// Find out if attendance went up or down from the previous value
+			$prevString = "";
+
+			// Perform checking while we're in bounds of the array
+			if($count+1 < count($attendanceHistory))
+			{
+				$ind = $count+1;
+
+				$change = $history['attendance'] - $attendanceHistory[$ind]['attendance'];
+
+				if($change < 0)
+				{
+					$prevString = '<span style="font-size:1.25em;font-weight:bold;color:red;">&darr;</span> ' . $change;
+				}
+				elseif($change > 0)
+				{
+					$prevString = '<span style="font-size:1.25em;font-weight:bold;color:green;">&uarr;</span> ' . $change;
+				}
+				else // $attendanceHistory[$ind]['attendance'] == $history['attendance']
+				{
+					$prevString = '<b>=</b> 0';
+				}
+			}
+
 ?>
 		<tr>
 			<td><?php echo $history['create_time']; ?></td>
 			<td><?php echo $history['attendance']; ?></td>
+			<td><?php echo $prevString; ?></td>
 			<td><?php echo $history['create_user_name']; ?></td>
 		</tr>
 <?php
+			// Update counter
+			$count++;
 		}
 ?>
 	</tbody>
@@ -141,12 +176,20 @@ if($targetLot)
 			<input name="color" value="<?php echo $targetLot->color; ?>" />
 		</p>
 		<p>
+			<label for="location_name">Location Name<span class="required">*</span>:</label><br>
+			<input name="location_name" value="<?php echo $targetLot->location_name; ?>" required />
+		</p>
+		<p>
 			<label for="latitude">Latitude:</label><br>
 			<input type="number" step="any" name="latitude" value="<?php echo $targetLot->latitude; ?>" />
 		</p>
 		<p>
 			<label for="longitude">Longitude:</label><br>
 			<input type="number" step="any" name="longitude" value="<?php echo $targetLot->longitude; ?>" />
+		</p>
+		<p>
+			<label for="max_capacity">Maximum Capacity<span class="required">*</span>:</label><br>
+			<input name="max_capacity" value="<?php echo $targetLot->max_capacity; ?>" required />
 		</p>
 		<input type="hidden" name="id" value="<?php echo $targetLot->id; ?>" />
 		<input type="hidden" name="phase" value="updateDetails" />
@@ -190,7 +233,7 @@ if($targetLot->latitude && $targetLot->longitude)
 
         var mapOptions = {
           center: lotLoc,
-          zoom: 10,
+          zoom: 16,
           mapTypeId: google.maps.MapTypeId.HYBRID
         }
 
