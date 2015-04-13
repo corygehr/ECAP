@@ -7,7 +7,7 @@
      */
 ?>
 <h1>Dashboard</h1>
-<div id="map-canvas" style="clear:both;width:100%"></div>
+<div id="map-canvas" style="clear:both;width:100%;height:500px"></div>
 <script src="https://maps.googleapis.com/maps/api/js"></script>
 <script type="text/javascript">
 	// Google Maps
@@ -30,7 +30,7 @@
 	}
 ?>
 
-        var centerLoc = new google.maps.LatLng(40.7904188,-77.8431301); // Beaver Stadium Coordinates
+        var centerLoc = new google.maps.LatLng(40.812152,-77.856176); // Beaver Stadium Coordinates
 
         var mapOptions = {
           center: centerLoc,
