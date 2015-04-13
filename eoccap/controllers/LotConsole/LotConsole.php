@@ -50,20 +50,16 @@ class LotConsole extends \Thinker\Framework\Controller
 						$this->deleteLot();
 					break;
 
-					case 'updateAttendance':
-						$this->updateAttendance();
-					break;
-
-					case 'updateReadiness':
-						$this->updateReadiness();
+					case 'updateCapacity':
+						$this->updateCapacity();
 					break;
 
 					case 'updateDetails':
 						$this->updateDetails();
 					break;
 
-					case 'attendanceUpdateSuccess':
-						\Thinker\Framework\Notification::push("Updated lot attendance successfully!", "success");
+					case 'capacityUpdateSuccess':
+						\Thinker\Framework\Notification::push("Updated lot capacity successfully!", "success");
 					break;
 
 					case 'detailUpdateSuccess':
@@ -77,8 +73,8 @@ class LotConsole extends \Thinker\Framework\Controller
 
 				// Pass the lot back to the view
 				$this->set('Lot', $targetLot);
-				$this->set('Attendance', LotAttendance::fetchCurrentLotAttendance($targetLot->id));
-				$this->set('ATTENDANCE_HISTORY', LotAttendance::fetchByLot($targetLot->id, 10));
+				$this->set('Capacity', LotCapacity::fetchCurrentLotCapacity($targetLot->id));
+				$this->set('CAPACITY_HISTORY', LotCapacity::fetchByLot($targetLot->id, 10));
 			}
 			else
 			{
@@ -118,21 +114,21 @@ class LotConsole extends \Thinker\Framework\Controller
 	}
 
 	/**
-	 * updateAttendance()
+	 * updateCapacity()
 	 * Updates the attendance logs for the current lot
 	 *
 	 * @access private
 	 */
-	private function updateAttendance()
+	private function updateCapacity()
 	{
 		// Get the details
 		$id = \Thinker\Http\Request::post('id', true);
 		$attendance = \Thinker\Http\Request::post('attendance', true);
 
 		// Add the log for the specific lot
-		if(LotAttendance::create(array($id, $attendance)))
+		if(LotCapacity::create(array($id, $attendance)))
 		{
-			\Thinker\Http\Redirect::go('LotConsole', 'manage', array('id' => $id, 'phase' => 'attendanceUpdateSuccess'));
+			\Thinker\Http\Redirect::go('LotConsole', 'manage', array('id' => $id, 'phase' => 'capacityUpdateSuccess'));
 		}
 		else
 		{

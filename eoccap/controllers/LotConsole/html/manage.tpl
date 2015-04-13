@@ -8,7 +8,7 @@
 
 // Get our Lot Object to work with
 $targetLot = $this->get('Lot');
-$targetAttendance = $this->get('Attendance');
+$targetCapacity = $this->get('Capacity');
 
 ?>
 <h4><a href="<?php echo \Thinker\Http\Url::create('LotManagement'); ?>">Back to All Lots</a></h4>
@@ -25,8 +25,8 @@ if($targetLot)
 				<?php echo $targetLot->location_name; ?>
 			</p>
 			<p>
-				<label for="current_attendance">Current Attendance:</label><br>
-				<?php echo  $targetAttendance->attendance . "/" . $targetLot->max_capacity; ?>
+				<label for="current_capacity">Current Capacity:</label><br>
+				<?php echo $targetCapacity->capacity; ?>%
 			</p>
 			<p>
 				<label for="status">Current Status:</label><br>
@@ -34,7 +34,7 @@ if($targetLot)
 			</p>
 			<p>
 				<label for="attendance_update">Last Lot Attendance Update:</label><br>
-				<?php echo $targetAttendance->create_time; ?><br>
+				<?php echo $targetCapacity->create_time; ?><br>
 			</p>
 			<p>
 				<label for="location_name">Last Lot Information Update:</label><br>
@@ -44,47 +44,28 @@ if($targetLot)
 	<div id="map-canvas" style="float:right; min-width: 380px; height: 350px;"></div>
 </fieldset>
 <form method="post">
-	<legend id="updateAttendance"><a class="fsLink" onclick="showHideFieldset('updateAttendance')">Update Attendance <span class="expandButton">[-]</span></a></legend>
-	<fieldset id="updateAttendance">
+	<legend id="updateCapacity"><a class="fsLink" onclick="showHideFieldset('updateCapacity')">Update Capacity <span class="expandButton">[-]</span></a></legend>
+	<fieldset id="updateCapacity">
 		<p>
-			<label for="attendance">Current Attendance<span class="required">*</span>:</label><br>
-			<input type="number" name="attendance" value="<?php echo $targetAttendance->attendance; ?>" required />
+			<label for="attendance">Current Capacity<span class="required">*</span>:</label><br>
+			<input type="number" name="attendance" value="<?php echo $targetCapacity->capacity; ?>" required />%
 		</p>
 		<input type="hidden" name="id" value="<?php echo $targetLot->id; ?>" />
-		<input type="hidden" name="phase" value="updateAttendance" />
-		<input type="submit" value="Update Attendance" />
+		<input type="hidden" name="phase" value="updateCapacity" />
+		<input type="submit" value="Update Capacity" />
 	</fieldset>
 </form>
 <form method="post">
-	<legend id="updateReadiness"><a class="fsLink" onclick="showHideFieldset('updateReadiness')">Update Readiness <span class="expandButton">[+]</span></a></legend>
-	<fieldset id="updateReadiness" style="display:none">
-		<p>
-			<label for="status">Current Status<span class="required">*</span>:</label><br>
-			<select name="status" required>
-				<option value="Open">Open</option>
-				<option value="Closed">Closed</option>
-				<option value="Limited">Limited Availability</option>
-			</select>
-		</p>
-		<p>
-			<label for="readiness_note">Comment<span class="required">*</span>:</label><br>
-			<textarea name="readiness_comment"></textarea>
-		</p>
-		<p>
-			<label for="notify">Notify EOC?</label><br>
-			<input type="checkbox" name="notify" />
-		</p>
-		<p>
-			By checking 'Notify', the EOC staff will be alerted with your comment. Use this 
-			if you need supplies or need to mark hazards that need to be cleared.
-		</p>
+	<legend id="completeReadiness"><a class="fsLink" onclick="showHideFieldset('completeReadiness')">Update Readiness <span class="expandButton">[+]</span></a></legend>
+	<fieldset id="completeReadiness" style="display:none">
+		
 		<input type="hidden" name="id" value="<?php echo $targetLot->id; ?>" />
-		<input type="hidden" name="phase" value="updateReadiness" />
+		<input type="hidden" name="phase" value="completeReadiness" />
 		<input type="submit" value="Update Readiness" />
 	</fieldset>
 </form>
-<legend id="attendanceHistory"><a class="fsLink" onclick="showHideFieldset('attendanceHistory')">Attendance History <span class="expandButton">[+]</span></a></legend>
-<fieldset id="attendanceHistory" style="display:none">
+<legend id="capacityHistory"><a class="fsLink" onclick="showHideFieldset('capacityHistory')">Attendance History <span class="expandButton">[+]</span></a></legend>
+<fieldset id="capacityHistory" style="display:none">
 	<p>
 		Below are the last ten entries made for this lot:
 	</p>
@@ -99,9 +80,9 @@ if($targetLot)
 		</thead>
 <?php
 	// Get the lots
-	$attendanceHistory = $this->get('ATTENDANCE_HISTORY');
+	$capacityHistory = $this->get('CAPACITY_HISTORY');
 
-	if($attendanceHistory)
+	if($capacityHistory)
 	{
 ?>
 	<tbody>
@@ -110,17 +91,17 @@ if($targetLot)
 		$count = 0;
 
 		// Output rows
-		foreach($attendanceHistory as $history)
+		foreach($capacityHistory as $history)
 		{
-			// Find out if attendance went up or down from the previous value
+			// Find out if capacity went up or down from the previous value
 			$prevString = "";
 
 			// Perform checking while we're in bounds of the array
-			if($count+1 < count($attendanceHistory))
+			if($count+1 < count($capacityHistory))
 			{
 				$ind = $count+1;
 
-				$change = $history['attendance'] - $attendanceHistory[$ind]['attendance'];
+				$change = $history['capacity'] - $capacityHistory[$ind]['capacity'];
 
 				if($change < 0)
 				{
@@ -130,7 +111,7 @@ if($targetLot)
 				{
 					$prevString = '<span style="font-size:1.25em;font-weight:bold;color:green;">&uarr;</span> ' . $change;
 				}
-				else // $attendanceHistory[$ind]['attendance'] == $history['attendance']
+				else // $capacityHistory[$ind]['attendance'] == $history['attendance']
 				{
 					$prevString = '<b>=</b> 0';
 				}
@@ -139,7 +120,7 @@ if($targetLot)
 ?>
 		<tr>
 			<td><?php echo $history['create_time']; ?></td>
-			<td><?php echo $history['attendance']; ?></td>
+			<td><?php echo $history['capacity']; ?></td>
 			<td><?php echo $prevString; ?></td>
 			<td><?php echo $history['create_user_name']; ?></td>
 		</tr>
@@ -157,7 +138,7 @@ if($targetLot)
 ?>
 </table>
 <p>
-	No attendance history found.
+	No capacity history found.
 </p>
 <?php
 	}
@@ -247,7 +228,7 @@ if($targetLot->latitude && $targetLot->longitude)
 
         var contentHtml = '<div id="content">'+
         	'<h4><?php echo $targetLot->name . " (" . $targetLot->location_name . ")"; ?></h4>'+
-        	'<p><b>Current Attendance:</b> <?php echo $targetAttendance->attendance . "/" . $targetLot->max_capacity; ?></p>'+
+        	'<p><b>Current Capacity:</b> <?php echo $targetCapacity->attendance; ?>%</p>'+
         	'</div>';
 
 		var lotInfo = new google.maps.InfoWindow({
