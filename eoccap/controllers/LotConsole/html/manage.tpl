@@ -35,8 +35,8 @@ if($targetLot)
 </form>
 <br>
 <form method="post">
-	<fieldset>
-		<legend>Update Readiness</legend>
+	<legend id="updateReadiness"><a class="fsLink" onclick="showHideFieldset('updateReadiness')">Update Readiness <span class="expandButton">[+]</span></a></legend>
+	<fieldset id="updateReadiness" style="display:none">
 		<p>
 			<label for="status">Current Status<span class="required">*</span>:</label><br>
 			<select name="status" required>
@@ -64,8 +64,8 @@ if($targetLot)
 </form>
 <br>
 <form method="post">
-	<fieldset>
-		<legend>Update Lot Information</legend>
+	<legend id="updateInformation"><a class="fsLink" onclick="showHideFieldset('updateInformation')">Update Lot Information <span class="expandButton">[+]</span></a></legend>
+	<fieldset id="updateInformation" style="display:none">
 		<p>
 			<label for="name">Lot Name<span class="required">*</span>:</label><br>
 			<input name="name" value="<?php echo $targetLot->name; ?>" required />
@@ -89,8 +89,8 @@ if($targetLot)
 </form>
 <br>
 <form method="post">
-	<fieldset>
-		<legend>Delete Lot</legend>
+	<legend id="deleteLot"><a class="fsLink" onclick="showHideFieldset('deleteLot')">Delete Lot <span class="expandButton">[+]</span></a></legend>
+	<fieldset id="deleteLot" style="display:none">
 		<p>
 			<b>WARNING!</b> This action cannot be undone.
 		</p>
