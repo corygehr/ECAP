@@ -56,6 +56,14 @@ class LotAttendance extends \Thinker\Framework\Model
 			$this->Lot = new Lot($this->lot_id);
 			$this->CreateUser = new User($this->create_user);
 		}
+		else
+		{
+			// Create empty object
+			$this->id = 0;
+			$this->lot_id = 0;
+			$this->attendance = "NaN";
+			$this->create_time = "0000-00-00 00:00:00";
+		}
 	}
 
 	/**
@@ -86,6 +94,62 @@ class LotAttendance extends \Thinker\Framework\Model
 		}
 
 		return false;
+	}
+
+	/**
+	 * fetchByLot()
+	 * Fetches all lot attendance data for a specific loc
+	 *
+	 * @access public
+	 * @static
+	 * @param int $lotId Lot ID
+	 * @param int $limit Result Limiter
+	 * @return mixed[] Array of Attendance Data
+	 */
+	public static function fetchByLot($lotId, $limit = null)
+	{
+		global $_DB;
+
+		$query = "SELECT la.*, l.name AS lot_name, u.full_name AS create_user_name
+				  FROM lot_attendance la 
+				  JOIN users u ON u.username = la.create_user 
+				  JOIN lots l ON l.id = la.lot_id 
+				  WHERE la.lot_id = ? 
+				  ORDER BY create_time DESC";
+				  
+		$data = array($lotId);
+
+		if($limit)
+		{
+			$query .= " LIMIT $limit";
+		}
+
+		return $_DB['eoc_cap_mgmt']->doQueryArr($query, $data);
+	}
+
+	/**
+	 * fetchCurrentLotAttendance()
+	 * Fetches the current attendance for a lot
+	 *
+	 * @access public
+	 * @static
+	 * @param int $lotId Lot ID
+	 * @return LotAttendance Attendance Object
+	 */
+	public static function fetchCurrentLotAttendance($lotId)
+	{
+		// Use fetchByLot to get data
+		$data = self::fetchByLot($lotId, 1);
+
+		if($data)
+		{
+			return new LotAttendance($data[0]['id']);
+		}
+		else
+		{
+			// Return empty object
+			return new LotAttendance();
+		}
 	}
 
 	/**
