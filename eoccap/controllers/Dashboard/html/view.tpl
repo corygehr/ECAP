@@ -238,6 +238,26 @@ if($closed)
 		// Use a single infoWindow to ensure we don't have more than one open at a time
 		var infoWindow = new google.maps.InfoWindow();
 
+		/* For the future
+		// Test trafficcam link
+		var camTestMarker = new google.maps.Marker({
+			position: new google.maps.LatLng(40.829323,-77.805247),
+			map: map,
+			title: "SR 0150 & SR 0026"
+		});
+
+		var camTestContent = '<div id="content">'+
+			'<h4>SR 00150 & SR 0026</h4>'+
+			'<iframe style="height:100%;width:100%;" src="http://www.511pa.com/flowplayeri.aspx?CAMID=CAM-02-020&nocache=1429043634386"></iframe>'+
+			'</div>';
+
+		google.maps.event.addListener(camTestMarker, 'click', function() {
+			infoWindow.close();
+			infoWindow.setContent(camTestContent);
+			infoWindow.open(map, camTestMarker);
+  		});
+		*/
+
 <?php
 	// Output markers for each lot
 	if($lots)
