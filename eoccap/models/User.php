@@ -144,7 +144,7 @@ class User
 				$query = "INSERT INTO user_passwords(username, hash)
 						  VALUES(?, ?)";
 
-				$hashPw = hash('sha256', $password);
+				$hashPw = hash('sha256', (self::hashPassword($password)));
 
 				if(!$_DB['eoc_cap_mgmt']->doQuery($query, array($data[0], $hashPw)))
 				{
@@ -273,6 +273,20 @@ class User
 				  ORDER BY name";
 
 		return $_DB['eoc_cap_mgmt']->doQueryArr($query);
+	}
+
+	/**
+	 * hashPassword()
+	 * Creates the hash for a user's password
+	 *
+	 * @access public
+	 * @static
+	 * @param string $password Password
+	 * @return string Hashed password
+	 */
+	public static function hashPassword($password)
+	{
+		return hash('sha256', SiteGlobal::fetch('PASSWORD_SALT') . $password);
 	}
 
 	/**
