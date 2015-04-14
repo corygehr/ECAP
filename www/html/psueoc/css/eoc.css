@@ -113,6 +113,15 @@ div.tablesorterPager input {
 	text-align: center;
 }
 
+footer a {
+	color: #fff;
+	text-decoration: underline;
+}
+
+footer a:hover {
+	color: #d5d5d5;
+}
+
 /* Notifications */
 div.notification p {
 	margin: 0;
