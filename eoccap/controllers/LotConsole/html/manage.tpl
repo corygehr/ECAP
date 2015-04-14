@@ -234,6 +234,10 @@ if($targetLot)
 		<input type="submit" value="Complete Readiness Assessment" />
 	</fieldset>
 </form>
+<?php
+	if($_SESSION['USER']->user_type == 1)
+	{
+?>
 <form method="post">
 	<legend id="updateStatus"><a class="fsLink" onclick="showHideFieldset('updateStatus')">Update Lot Status <span class="expandButton">[+]</span></a></legend>
 	<fieldset id="updateStatus" style="display:none">
@@ -241,16 +245,16 @@ if($targetLot)
 			<label for="status">Status<span class="required">*</span>:</label><br>
 			<select name="status" required>
 <?php
-	// Echo status choices and select the current status by default
-	if($possibleStatuses)
-	{
-		foreach($possibleStatuses as $s)
+		// Echo status choices and select the current status by default
+		if($possibleStatuses)
 		{
+			foreach($possibleStatuses as $s)
+			{
 ?>
 				<option value="<?php echo $s['id']; ?>" <?php echo selected($s['id'], $targetStatus->status_id); ?>><?php echo $s['name']; ?></option>			
 <?php
+			}
 		}
-	}
 ?>
 			</select>
 		</p>
@@ -307,6 +311,7 @@ if($targetLot)
 	</fieldset>
 </form>
 <?php
+	}
 }
 else
 {

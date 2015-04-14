@@ -121,19 +121,26 @@ class LotConsole extends \Thinker\Framework\Controller
 	 */
 	private function deleteLot()
 	{
-		// Get the ID of the lot to deactivate
-		$id = \Thinker\Http\Request::post('id', true);
-
-		// Create the object and invoke delete
-		$tLot = new Lot($id);
-
-		if($tLot->delete())
+		if($_SESSION['USER']->user_type == 1)
 		{
-			\Thinker\Http\Redirect::go('LotManagement', 'manage', array('phase' => 'deleteSuccess'));
+			// Get the ID of the lot to deactivate
+			$id = \Thinker\Http\Request::post('id', true);
+
+			// Create the object and invoke delete
+			$tLot = new Lot($id);
+
+			if($tLot->delete())
+			{
+				\Thinker\Http\Redirect::go('LotManagement', 'manage', array('phase' => 'deleteSuccess'));
+			}
+			else
+			{
+				\Thinker\Framework\Notification::push("Failed to delete the lot, please try again.", "error");
+			}
 		}
 		else
 		{
-			\Thinker\Framework\Notification::push("Failed to delete the lot, please try again.", "error");
+			\Thinker\Framework\Notification::push("You do not have access to do that.", "warning");
 		}
 	}
 
@@ -168,34 +175,41 @@ class LotConsole extends \Thinker\Framework\Controller
 	 */
 	private function updateDetails()
 	{
-		// Get information
-		$id = \Thinker\Http\Request::post('id', true);
-		$color = \Thinker\Http\Request::post('color');
-		$location_name = \Thinker\Http\Request::post('location_name', true);
-		$latitude = \Thinker\Http\Request::post('latitude');
-		$longitude = \Thinker\Http\Request::post('longitude');
-		$max_capacity = \Thinker\Http\Request::post('max_capacity', true);
-
-		// Create object for lot
-		$target = new Lot($id);
-
-		if($target)
+		if($_SESSION['USER']->user_type == 1)
 		{
-			// Update properties
-			$target->color = $color;
-			$target->location_name = $location_name;
-			$target->latitude = $latitude;
-			$target->longitude = $longitude;
-			$target->max_capacity = $max_capacity;
+			// Get information
+			$id = \Thinker\Http\Request::post('id', true);
+			$color = \Thinker\Http\Request::post('color');
+			$location_name = \Thinker\Http\Request::post('location_name', true);
+			$latitude = \Thinker\Http\Request::post('latitude');
+			$longitude = \Thinker\Http\Request::post('longitude');
+			$max_capacity = \Thinker\Http\Request::post('max_capacity', true);
 
-			// Invoke object update
-			if($target->update())
+			// Create object for lot
+			$target = new Lot($id);
+
+			if($target)
 			{
-				\Thinker\Http\Redirect::go('LotConsole', 'manage', array('id' => $id, 'phase' => 'detailUpdateSuccess'));
-			}
-		}
+				// Update properties
+				$target->color = $color;
+				$target->location_name = $location_name;
+				$target->latitude = $latitude;
+				$target->longitude = $longitude;
+				$target->max_capacity = $max_capacity;
 
-		\Thinker\Framework\Notification::push("Failed to update the lot, please try again.", "error");
+				// Invoke object update
+				if($target->update())
+				{
+					\Thinker\Http\Redirect::go('LotConsole', 'manage', array('id' => $id, 'phase' => 'detailUpdateSuccess'));
+				}
+			}
+
+			\Thinker\Framework\Notification::push("Failed to update the lot, please try again.", "error");
+		}
+		else
+		{
+			\Thinker\Framework\Notification::push("You do not have access to do that.", "warning");
+		}
 	}
 
 	/**
@@ -239,18 +253,25 @@ class LotConsole extends \Thinker\Framework\Controller
 	 */
 	private function updateStatus()
 	{
-		// Get form information
-		$id = \Thinker\Http\Request::post('id', true);
-		$status = \Thinker\Http\Request::post('status', true);
-		$comment = \Thinker\Http\Request::post('comment');
-
-		if(LotStatusLog::create(array($id, $status, $comment)))
+		if($_SESSION['USER']->user_type == 1)
 		{
-			\Thinker\Http\Redirect::go('LotConsole', 'manage', array('id' => $id, 'phase' => 'statusUpdateSuccess'));
+			// Get form information
+			$id = \Thinker\Http\Request::post('id', true);
+			$status = \Thinker\Http\Request::post('status', true);
+			$comment = \Thinker\Http\Request::post('comment');
+
+			if(LotStatusLog::create(array($id, $status, $comment)))
+			{
+				\Thinker\Http\Redirect::go('LotConsole', 'manage', array('id' => $id, 'phase' => 'statusUpdateSuccess'));
+			}
+			else
+			{
+				\Thinker\Framework\Notification::push("Failed to create the lot status log, please try again.", "error");
+			}
 		}
 		else
 		{
-			\Thinker\Framework\Notification::push("Failed to create the lot status log, please try again.", "error");
+			\Thinker\Framework\Notification::push("You do not have access to do that.", "warning");
 		}
 	}
 }
