@@ -11,6 +11,25 @@ namespace EocCap;
 class LotConsole extends \Thinker\Framework\Controller
 {
 	/**
+	 * __construct()
+	 * Constructor for the LotConsole class
+	 *
+	 * @access public
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+
+		// Verify acces
+		if(!$this->session->auth('section', array(
+			'section' => SECTION, 'subsection' => SUBSECTION, 
+			'url_params' => array('id' => \Thinker\Http\Request::request('id')))))
+		{
+			\Thinker\Http\Redirect::error(403);
+		}
+	}
+
+	/**
 	 * defaultSubsection()
 	 * Returns the default subsection for this Controller
 	 *
