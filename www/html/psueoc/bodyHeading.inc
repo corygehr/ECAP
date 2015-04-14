@@ -10,7 +10,7 @@
     <div class="container">
       <!--BEGIN MASTHEAD-->
       <div class="masthead">
-        <img src="html/psueoc/img/psu_logo.png" alt="Penn State University Logo" width="230px" height="97px" />
+        <img src="html/psueoc/img/psu_logo.png" alt="Penn State University Logo" width="230" height="97" />
         <br>
         <h2>Penn State Event Parking Management</h2>
         <br>
