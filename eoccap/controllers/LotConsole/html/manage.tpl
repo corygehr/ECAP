@@ -357,6 +357,10 @@ if($targetLot->latitude && $targetLot->longitude)
 		};
 		var kmlLayer = new google.maps.KmlLayer(kmlUrl, kmlOptions);
 
+		// Traffic overlay
+		var trafficLayer = new google.maps.TrafficLayer();
+		trafficLayer.setMap(map);
+
         // Lot information window
         var lotMarker = new google.maps.Marker({
 		    position: lotLoc,
