@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c245acbb4e69f25adcf3026664026db3",
+    "hash": "a833c8c12b6383a4a7bf7d2f7b45f141",
     "packages": [
         {
             "name": "thon/thinker-lib",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/penn-state-dance-marathon/thon-thinker-lib.git",
-                "reference": "b9b7d91d4414a0e5b2688c512ce4d479a76bca1b"
+                "reference": "569515f7db5bf9e2bc8f1363af8306aaf9c33bf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/penn-state-dance-marathon/thon-thinker-lib/zipball/b9b7d91d4414a0e5b2688c512ce4d479a76bca1b",
-                "reference": "b9b7d91d4414a0e5b2688c512ce4d479a76bca1b",
+                "url": "https://api.github.com/repos/penn-state-dance-marathon/thon-thinker-lib/zipball/569515f7db5bf9e2bc8f1363af8306aaf9c33bf8",
+                "reference": "569515f7db5bf9e2bc8f1363af8306aaf9c33bf8",
                 "shasum": ""
             },
             "require": {
@@ -47,7 +47,7 @@
                 "framework",
                 "thon"
             ],
-            "time": "2015-04-14 06:13:55"
+            "time": "2015-04-14 21:37:13"
         }
     ],
     "packages-dev": [
@@ -111,12 +111,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "34a9c28761a7513d59c461f321f712c92c561188"
+                "reference": "0a4c4ed40888783c992198d5d520d49c1c87f9d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/34a9c28761a7513d59c461f321f712c92c561188",
-                "reference": "34a9c28761a7513d59c461f321f712c92c561188",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/0a4c4ed40888783c992198d5d520d49c1c87f9d5",
+                "reference": "0a4c4ed40888783c992198d5d520d49c1c87f9d5",
                 "shasum": ""
             },
             "require": {
@@ -165,7 +165,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-04-11 09:01:16"
+            "time": "2015-04-14 09:28:40"
         },
         {
             "name": "phpunit/php-file-iterator",
