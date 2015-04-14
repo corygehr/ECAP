@@ -8,34 +8,54 @@
 ?>
     <!--BEGIN CONTAINER-->
     <div class="container">
-      <!--BEGIN MASTHEAD-->
-      <div class="masthead">
+    	<!--BEGIN MASTHEAD-->
+    	<div class="masthead">
         <img src="html/psueoc/img/psu_logo.png" alt="Penn State University Logo" width="230" height="97" />
         <br>
         <h2>Penn State Event Parking Management</h2>
         <br>
-      </div>
-      <!--END MASTHEAD-->
-      <!--START NAV MENU-->
-      <nav>
+     </div>
+     <!--END MASTHEAD-->
+     <!--START NAV MENU-->
+     <nav>
         <ul class="nav nav-justified">
             <li<?php echo (SECTION == 'Welcome' ? " class='active'" : ''); ?>>
-              <a href="<?php echo \Thinker\Http\Url::create('Welcome'); ?>">Home</a>
+            	<a href="<?php echo \Thinker\Http\Url::create('Welcome'); ?>">Home</a>
             </li>
-            <li<?php echo (SECTION == 'Dashboard' ? " class='active'" : ''); ?>>
-              <a href="<?php echo \Thinker\Http\Url::create('Dashboard'); ?>">Dashboard</a>
-            </li>
-            <li<?php echo (SECTION == 'LotManagement' || SECTION == 'LotConsole' ? " class='active'" : ''); ?>>
-              <a href="<?php echo \Thinker\Http\Url::create('LotManagement'); ?>">Manage Lots</a>
-            </li>
-            <li<?php echo (SECTION == 'SiteManagement' ? " class='active'" : ''); ?>>
-              <a href="<?php echo \Thinker\Http\Url::create('SiteManagement'); ?>">Site Management</a>
-            </li>      
+<?php
+	if(isset($_SESSION['USER']))
+	{
+		switch($_SESSION['USER']->user_type)
+		{
+			case 1:
+?>
+			<li<?php echo (SECTION == 'Dashboard' ? " class='active'" : ''); ?>>
+			 	<a href="<?php echo \Thinker\Http\Url::create('Dashboard'); ?>">Dashboard</a>
+			</li>
+			<li<?php echo (SECTION == 'LotManagement' || SECTION == 'LotConsole' ? " class='active'" : ''); ?>>
+				<a href="<?php echo \Thinker\Http\Url::create('LotManagement'); ?>">Manage Lots</a>
+			</li>
+			<li<?php echo (SECTION == 'SiteManagement' ? " class='active'" : ''); ?>>
+				<a href="<?php echo \Thinker\Http\Url::create('SiteManagement'); ?>">Site Management</a>
+			</li>
+<?php
+			break;
+
+			case 2:
+?>
+			<li<?php echo (SECTION == 'LotManagement' || SECTION == 'LotConsole' ? " class='active'" : ''); ?>>
+				<a href="<?php echo \Thinker\Http\Url::create('LotManagement'); ?>">Manage Lots</a>
+			</li>
+<?php
+			break;
+        }
+    }
+?>   
         </ul>
-      </nav>
-      <!--END NAV MENU-->
-      <!-- BEGIN WORKING BODY {PHP}-->
-      <div class="body2">
+     </nav>
+     <!--END NAV MENU-->
+     <!-- BEGIN WORKING BODY {PHP}-->
+     <div class="body2">
 <?php
 	// Output notifications
 	if(!empty($_MESSAGES))
