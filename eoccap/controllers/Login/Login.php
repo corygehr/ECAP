@@ -133,7 +133,7 @@ class Login extends \Thinker\Framework\Controller
 				$_SESSION['USER'] = new User($un);
 
 				// Redirect
-				\Thinker\Http\Redirect::go('LotManagement', 'manage');
+				\Thinker\Http\Redirect::go('Dashboard');
 			break;
 
 			case 'attendant':
@@ -177,7 +177,7 @@ class Login extends \Thinker\Framework\Controller
 			switch($_SESSION['USER']->user_type)
 			{
 				case 1:
-					\Thinker\Http\Redirect::go('LotManagement', 'manage');
+					\Thinker\Http\Redirect::go('Dashboard');
 				break;
 
 				case 2:
