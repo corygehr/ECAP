@@ -24,14 +24,25 @@ class Logout extends \Thinker\Framework\Controller
 	}
 
 	/**
-	 * do()
+	 * handle()
 	 * Handles the logout for the current user
 	 *
 	 * @access public
 	 */
-	public function do()
+	public function handle()
 	{
 		// Process logout
+
+		// Destroy session cookie
+		if(isset($_COOKIE[session_name()]))
+		{
+			setcookie(session_name(), '', time()-3600, '/');
+		}
+
+		$_SESSION = null;
+
+		// Destroy session
+		session_destroy();
 
 		// Redirect
 		\Thinker\Http\Redirect::go('Welcome');
