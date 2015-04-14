@@ -38,7 +38,7 @@
 		<input type="submit" value="Add Lot" />
 	</fieldset>
 </form>
-<legend>Existing Lots</legend>
+<legend>Active Lots</legend>
 <table id="lot_list" class="tablesorter">
 	<thead>
 		<tr>
