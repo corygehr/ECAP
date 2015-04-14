@@ -14,6 +14,7 @@ $attention = array();
 $limited = array();
 $open = array();
 $closed = array();
+$ready = array();
 
 foreach($lots as $lot)
 {
@@ -34,6 +35,10 @@ foreach($lots as $lot)
 
 		case 'Needs Attention':
 			$attention[] = $lot;
+		break;
+
+		case 'Ready':
+			$ready[] = $lot;
 		break;
 	}
 }
@@ -81,6 +86,39 @@ if($attention)
 			<td><?php echo $comment; ?></td>
 			<td><?php echo $updateTime; ?></td>
 			<td><?php echo $updateUser; ?></td>
+		</tr>
+<?php
+	}
+?>
+	</tbody>
+</table>
+<?php
+}
+
+// Output Ready lots
+if($ready)
+{
+?>
+<legend>Ready</legend>
+<table id="ready" class="tablesorter">
+	<thead>
+		<tr>
+			<th>Lot Name</th>
+			<th>Comment</th>
+			<th>Last Update</th>
+			<th>Updated By</th>
+		</tr>
+	</thead>
+	<tbody>
+<?php
+	foreach($ready as $lot)
+	{
+?>
+		<tr>
+			<td><a href="<?php echo \Thinker\Http\Url::create('LotConsole', 'manage', array('id' => $lot['id'])); ?>"><?php echo $lot['name']; ?></a></td>
+			<td><?php echo $lot['comment']; ?></td>
+			<td><?php echo $lot['status_create_time']; ?></td>
+			<td><?php echo $lot['status_create_user_name']; ?></td>
 		</tr>
 <?php
 	}
