@@ -10,6 +10,8 @@ namespace EocCap;
 
 class Login extends \Thinker\Framework\Controller
 {
+	protected $allowOpenAccess = true;
+	
 	/**
 	 * defaultSubsection()
 	 * Returns the default subsection for this Controller
