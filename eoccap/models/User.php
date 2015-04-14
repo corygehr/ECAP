@@ -153,7 +153,7 @@ class User
 					return false;
 				}
 
-				if(self::addUserRight(array($data[0], '*', null)))
+				if(self::addUserRight(array($data[0], '*', '*')))
 				{
 					// Commit
 					return $_DB['eoc_cap_mgmt']->commit();
