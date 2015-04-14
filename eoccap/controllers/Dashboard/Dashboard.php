@@ -31,8 +31,9 @@ class Dashboard extends \Thinker\Framework\Controller
 	 */
 	public function view()
 	{
-		// Fetch all possible lot statuses
+		// Fetch all possible lot statuses and lots
 		$this->set('STATUSES', LotStatus::fetchAll());
+		$this->set('LOTS', Lot::fetchAllExtended(true));
 	}
 }
 ?>
