@@ -14,6 +14,63 @@ $lots = $this->get('LOTS');
 ?>
 <h1>Dashboard</h1>
 <div id="map-canvas" style="clear:both;width:100%;height:500px"></div>
+<h2>Lot List</h2>
+<legend>Needs Attention</legend>
+<table id="attention" class="tablesorter">
+	<thead>
+		<tr>
+			<th>Lot Name</th>
+			<th>Comment</th>
+			<th>Last Update</th>
+			<th>Updated By</th>
+		</tr>
+	</thead>
+	<tbody>
+
+	</tbody>
+</table>
+<legend>Limited Availability</legend>
+<table id="limited" class="tablesorter">
+	<thead>
+		<tr>
+			<th>Lot Name</th>
+			<th>Comment</th>
+			<th>Last Update</th>
+			<th>Updated By</th>
+		</tr>
+	</thead>
+	<tbody>
+
+	</tbody>
+</table>
+<legend>Open</legend>
+<table id="open" class="tablesorter">
+	<thead>
+		<tr>
+			<th>Lot Name</th>
+			<th>Comment</th>
+			<th>Last Update</th>
+			<th>Updated By</th>
+		</tr>
+	</thead>
+	<tbody>
+
+	</tbody>
+</table>
+<legend>Closed</legend>
+<table id="closed" class="tablesorter">
+	<thead>
+		<tr>
+			<th>Lot Name</th>
+			<th>Comment</th>
+			<th>Last Update</th>
+			<th>Updated By</th>
+		</tr>
+	</thead>
+	<tbody>
+
+	</tbody>
+</table>
 <script src="https://maps.googleapis.com/maps/api/js"></script>
 <script type="text/javascript">
 	// Google Maps
