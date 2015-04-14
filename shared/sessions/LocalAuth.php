@@ -36,7 +36,6 @@ class LocalAuth extends Thinker\Framework\Session
 		switch($objType)
 		{
 			case 'section':
-				// Expecting [0] => SECTION, [1] => SUBSECTION, [2] => array([URL Param Name] => value)
 				if(count($params) >= 2)
 				{
 					$data = array(
@@ -48,9 +47,9 @@ class LocalAuth extends Thinker\Framework\Session
 					$limiters = '';
 
 					// Add additional URL params if exists
-					if(isset($params[3]))
+					if(isset($params['url_params']))
 					{
-						foreach($params[3] as $id => $val)
+						foreach($params['url_params'] as $id => $val)
 						{
 							$limiters .= " AND ((uri.identifier_name = :$id AND (uri.identifier_value = :$val OR uri.identifier_value = '*')))";
 							$data[":$id"] = $id;
@@ -66,7 +65,7 @@ class LocalAuth extends Thinker\Framework\Session
 							  AND ((ur.s = :section OR ur.s = '*') AND (ur.ss = :subsection OR ur.ss = '*'))
 							  $limiters 
 							  LIMIT 1";
-
+							  
 					return $_DB['eoc_cap_mgmt']->doQueryAns($query, $data);
 				}
 				else
