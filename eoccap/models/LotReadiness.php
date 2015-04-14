@@ -89,8 +89,7 @@ class LotReadiness extends \Thinker\Framework\Model
 			VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
 
 		// Add current user to $data
-		//$data[] = $_SESSION['USER_ID'];
-		$data[] = 'cmg5573';
+		$data[] = $_SESSION['USER']->username;
 
 		if($_DB['eoc_cap_mgmt']->doQuery($query, $data))
 		{

@@ -86,8 +86,7 @@ class Lot extends \Thinker\Framework\Model
 			VALUES(?, ?, ?, ?, ?, ?, ?, NOW())";
 
 		// Add current user to $data
-		//$data[] = $_SESSION['USER_ID'];
-		$data[] = 'cmg5573';
+		$data[] = $_SESSION['USER']->username;
 
 		if($_DB['eoc_cap_mgmt']->doQuery($query, $data))
 		{
@@ -249,7 +248,7 @@ class Lot extends \Thinker\Framework\Model
 				$this->latitude,
 				$this->longitude,
 				$this->max_capacity,
-				'cmg5573',
+				$_SESSION['USER']->username,
 				$this->id));
 	}
 }

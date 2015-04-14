@@ -73,7 +73,7 @@ class LotStatus extends \Thinker\Framework\Model
 			VALUES(?, ?, ?, ?, NOW())";
 
 		// Add current user to $data
-		$data[] = $_SESSION['USER_ID'];
+		$data[] = $_SESSION['USER']->username;
 
 		if($_DB['eoc_cap_mgmt']->doQuery($query, $data))
 		{
@@ -100,7 +100,7 @@ class LotStatus extends \Thinker\Framework\Model
 				  delete_user = :user 
 				  WHERE id = :id 
 				  LIMIT 1";
-		$params = array(':user' => $_SESSION['USER_ID'], ':id' => $this->id);
+		$params = array(':user' => $_SESSION['USER']->username, ':id' => $this->id);
 
 		return $_DB['eoc_cap_mgmt']->doQuery($query, $params);
 	}
@@ -168,6 +168,6 @@ class LotStatus extends \Thinker\Framework\Model
 				  WHERE id = :id 
 				  LIMIT 1";
 
-		return $_DB['eoc_lot_mgmt']->doQuery($query, $this->toArray() + array('user' => $_SESSION['USER_ID']));
+		return $_DB['eoc_lot_mgmt']->doQuery($query, $this->toArray() + array('user' => $_SESSION['USER']->username));
 	}
 }
