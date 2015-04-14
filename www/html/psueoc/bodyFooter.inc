@@ -1,23 +1,34 @@
 <?php
 	/**
-	 * bodyFooter.inc
-	 * Contains the footer for each THINKer page
+ 	 * bodyFooter.inc
+ 	 * Contains the footer for each THINKer page
 	 *
 	 * @author Cory Gehr
 	 */
 ?>
-      </div>
-      <!--END WORKING BODY-->
+    </div>
+    <!--END WORKING BODY-->
 
-      <!--BEGIN FOOTER-->
+    <!--BEGIN FOOTER-->
 
-      <footer class="footer">
+    <footer class="footer">
+<?php
+  // Display section for user information if logged in
+  if(isset($_SESSION['USER']))
+  {
+?>
         <p>
-          Copyright &copy; <script>document.write(new Date().getFullYear())</script> Penn State University Emergency Management<br>
-          Site Designed by IST 440W Team 21 Spring 2015<br>
-          Chris Grega, Cory Gehr, Emily Moore, Taylor Dreitlein</p>
-      </footer>
-      <!--END FOOTER-->
+        	Logged in as <b><?php echo $_SESSION['USER']->full_name; ?></b> (<a href="<?php echo \Thinker\Http\Url::create('Logout', 'handle'); ?>")>Logout</a>)
+        </p>
+<?php
+  }
+?>
+        <p>
+        	Copyright &copy; <script>document.write(new Date().getFullYear())</script> 
+        	<a href="http://psu.edu/" target="_blank">The Pennsylvania State University</a> | 
+        	<a href="http://www.psu.edu/ur/legal.html" target="_blanK">Privacy and Legal Statements</a> <br>
+    </footer>
+    <!--END FOOTER-->
     </div>
     <!--END CONTAINER-->
     
