@@ -19,9 +19,6 @@
      <!--START NAV MENU-->
      <nav>
         <ul class="nav nav-justified">
-            <li<?php echo (SECTION == 'Welcome' ? " class='active'" : ''); ?>>
-            	<a href="<?php echo \Thinker\Http\Url::create('Welcome'); ?>">Home</a>
-            </li>
 <?php
 	if(isset($_SESSION['USER']))
 	{
@@ -48,7 +45,24 @@
 			</li>
 <?php
 			break;
+
+			default:
+?>
+            <li<?php echo (SECTION == 'Welcome' ? " class='active'" : ''); ?>>
+            	<a href="<?php echo \Thinker\Http\Url::create('Welcome'); ?>">Home</a>
+            </li>
+<?php
+			break;
         }
+    }
+    else
+    {
+    	// Only output homepage link
+?>
+            <li<?php echo (SECTION == 'Welcome' ? " class='active'" : ''); ?>>
+            	<a href="<?php echo \Thinker\Http\Url::create('Welcome'); ?>">Home</a>
+            </li>
+<?php
     }
 ?>   
         </ul>
