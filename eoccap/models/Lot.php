@@ -168,9 +168,10 @@ class Lot extends \Thinker\Framework\Model
 		}
 
 		$query = "SELECT l.*, lcu.full_name AS lot_create_user_name, luu.full_name AS lot_update_user_name, 
-				  ldu.full_name AS lot_delete_user_name, lsl.*, ls.name AS status, 
-				  ls.description AS status_description, lslcu.full_name AS status_create_user_name, 
-				  lc.capacity, lccu.full_name AS capacity_create_user_name
+				  ldu.full_name AS lot_delete_user_name, lsl.status_id, lsl.comment, lsl.create_time AS status_create_time, 
+				  lslcu.full_name AS status_create_user_name, ls.name AS status, ls.description AS status_description, 
+				  lc.capacity, lc.create_time AS capacity_create_time, lccu.full_name AS capacity_create_user_name, 
+				  lr.notes, lr.create_time AS readiness_create_time, lrcu.full_name AS readiness_create_user_name 
 				  FROM lots l 
 				  JOIN lot_status_log lsl ON lsl.id = (
 				  	SELECT id 
@@ -187,11 +188,19 @@ class Lot extends \Thinker\Framework\Model
 				  	ORDER BY create_time DESC 
 				  	LIMIT 1
 				  	)
+				  LEFT JOIN lot_readiness lr ON lr.id = (
+				  	SELECT id 
+				  	FROM lot_readiness 
+				  	WHERE lot_id = l.id 
+				  	ORDER BY create_time DESC 
+				  	LIMIT 1
+				  	)
 				  LEFT JOIN users lcu ON lcu.username = l.create_user 
 				  LEFT JOIN users luu ON luu.username = l.update_user 
 				  LEFT JOIN users ldu ON ldu.username = l.delete_user 
 				  LEFT JOIN users lslcu ON lslcu.username = lsl.create_user 
 				  LEFT JOIN users lccu ON lccu.username = lc.create_user 
+				  LEFT JOIN users lrcu ON lrcu.username = lr.create_user 
 				  $where
 				  ORDER BY l.name";
 
