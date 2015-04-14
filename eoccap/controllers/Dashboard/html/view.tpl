@@ -28,7 +28,7 @@ foreach($lots as $lot)
 			$closed[] = $lot;
 		break;
 
-		case 'Limited Availability':
+		case 'Limited':
 			$limited[] = $lot;
 		break;
 
