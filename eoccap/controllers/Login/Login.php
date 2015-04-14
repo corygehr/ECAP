@@ -32,6 +32,9 @@ class Login extends \Thinker\Framework\Controller
 	 */
 	public function administrator()
 	{
+		// Ensure user isn't already logged in
+		$this->userSessionExists();
+
 		$phase = \Thinker\Http\Request::post('phase');
 
 		switch($phase)
@@ -50,6 +53,9 @@ class Login extends \Thinker\Framework\Controller
 	 */
 	public function attendant()
 	{
+		// Ensure user isn't already logged in
+		$this->userSessionExists();
+
 		$phase = \Thinker\Http\Request::post('phase');
 
 		switch($phase)
@@ -105,7 +111,9 @@ class Login extends \Thinker\Framework\Controller
 				// Verify the username and password
 				$un = \Thinker\Http\Request::post('username');
 				$hash = User::hashPassword(\Thinker\Http\Request::post('password'));
-
+				var_dump(\Thinker\Http\Request::post('password'));
+				var_dump(\Thinker\Http\Request::post('username'));
+				var_dump($hash);
 				// Authenticate
 				$query = "SELECT COUNT(1)
 						  FROM users u 
@@ -155,6 +163,30 @@ class Login extends \Thinker\Framework\Controller
 		}
 
 		// We've made it this far, so create the session with the user
+	}
+
+	/**
+	 * userSessionExists()
+	 * Redirects if a session already exists for the user
+	 *
+	 * @access private
+	 */
+	private function userSessionExists()
+	{
+		if(isset($_SESSION['USER"']))
+		{
+			// Redirect based on type
+			switch($_SESSION['USER']->user_type)
+			{
+				case 1:
+					\Thinker\Http\Redirect::go('LotManagement', 'manage');
+				break;
+
+				case 2:
+					\Thinker\Http\Redirect::go('LotConsole', 'manage', array('id' => 1));
+				break;
+			}
+		}
 	}
 }
 ?>
