@@ -111,9 +111,7 @@ class Login extends \Thinker\Framework\Controller
 				// Verify the username and password
 				$un = \Thinker\Http\Request::post('username');
 				$hash = User::hashPassword(\Thinker\Http\Request::post('password'));
-				var_dump(\Thinker\Http\Request::post('password'));
-				var_dump(\Thinker\Http\Request::post('username'));
-				var_dump($hash);
+				
 				// Authenticate
 				$query = "SELECT COUNT(1)
 						  FROM users u 
