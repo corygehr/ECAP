@@ -67,7 +67,7 @@ if($attention)
 			<td><a href="<?php echo \Thinker\Http\Url::create('LotConsole', 'manage', array('id' => $lot['id'])); ?>"><?php echo $lot['name']; ?></a></td>
 			<td><?php echo $lot['comment']; ?></td>
 			<td><?php echo $lot['update_time']; ?></td>
-			<td><?php echo $lot['status_create_user']; ?></td>
+			<td><?php echo $lot['status_create_user_name']; ?></td>
 		</tr>
 <?php
 	}
@@ -100,7 +100,7 @@ if($limited)
 			<td><a href="<?php echo \Thinker\Http\Url::create('LotConsole', 'manage', array('id' => $lot['id'])); ?>"><?php echo $lot['name']; ?></a></td>
 			<td><?php echo $lot['comment']; ?></td>
 			<td><?php echo $lot['update_time']; ?></td>
-			<td><?php echo $lot['status_create_user']; ?></td>
+			<td><?php echo $lot['status_create_user_name']; ?></td>
 		</tr>
 <?php
 	}
@@ -133,7 +133,7 @@ if($open)
 			<td><a href="<?php echo \Thinker\Http\Url::create('LotConsole', 'manage', array('id' => $lot['id'])); ?>"><?php echo $lot['name']; ?></a></td>
 			<td><?php echo $lot['comment']; ?></td>
 			<td><?php echo $lot['update_time']; ?></td>
-			<td><?php echo $lot['status_create_user']; ?></td>
+			<td><?php echo $lot['status_create_user_name']; ?></td>
 		</tr>
 <?php
 	}
@@ -166,7 +166,7 @@ if($closed)
 			<td><a href="<?php echo \Thinker\Http\Url::create('LotConsole', 'manage', array('id' => $lot['id'])); ?>"><?php echo $lot['name']; ?></a></td>
 			<td><?php echo $lot['comment']; ?></td>
 			<td><?php echo $lot['update_time']; ?></td>
-			<td><?php echo $lot['status_create_user']; ?></td>
+			<td><?php echo $lot['status_create_user_name']; ?></td>
 		</tr>
 <?php
 	}
