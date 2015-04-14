@@ -46,7 +46,7 @@ class SiteManagement extends \Thinker\Framework\Controller
 		}
 
 		// Provide form with all lots and User Types
-		$this->set('LOTS', Lot::findAll());
+		$this->set('LOTS', Lot::fetchAll(true));
 		$this->set('USER_TYPES', User::getUserTypes());
 
 		// Get a list of all users

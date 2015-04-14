@@ -120,20 +120,70 @@ class Lot extends \Thinker\Framework\Model
 	}
 
 	/**
-	 * findAll()
+	 * fetchAllExtended()
+	 * Fetches all Lots with extended Status and Readiness Information
+	 *
+	 * @access public
+	 * @static
+	 * @param boolean $ignoreInactive Flag that will ignore inactive results when true
+	 * @return mixed[] Array of Lot results
+	 */
+	public static function fetchAllExtended($ignoreInactive = false)
+	{
+		global $_DB;
+
+		$where = '';
+
+		if($ignoreInactive)
+		{
+			$where = 'WHERE l.delete_time IS NULL ';
+		}
+
+		$query = "SELECT l.*, lcu.full_name AS lot_create_user_name, luu.full_name AS lot_update_user_name, 
+				  ldu.full_name AS lot_delete_user_name, lsl.*, ls.name AS status, 
+				  ls.description AS status_description, lslcu.full_name AS status_create_user_name 
+				  FROM lots l 
+				  JOIN lot_status_log lsl ON lsl.id = (
+				  	SELECT id 
+				  	FROM lot_status_log 
+				  	WHERE lot_id = l.id 
+				  	ORDER BY create_time DESC 
+				  	LIMIT 1
+				  	) 
+				  JOIN lot_statuses ls ON ls.id = lsl.status_id 
+				  LEFT JOIN users lcu ON lcu.username = l.create_user 
+				  LEFT JOIN users luu ON luu.username = l.update_user 
+				  LEFT JOIN users ldu ON ldu.username = l.delete_user 
+				  LEFT JOIN users lslcu ON lslcu.username = lsl.create_user 
+				  $where
+				  ORDER BY l.name";
+
+		return $_DB['eoc_cap_mgmt']->doQueryArr($query);
+	}
+
+	/**
+	 * fetchAll()
 	 * Fetches all objects of this type
 	 *
 	 * @access public
 	 * @static
+	 * @param boolean $ignoreInactive Flag to ignore inactive results
 	 * @return mixed[] Array of Lot results
 	 */
-	public static function findAll()
+	public static function fetchAll($ignoreInactive = false)
 	{
 		global $_DB;
 
+		$where = '';
+
+		if($ignoreInactive)
+		{
+			$where = "WHERE delete_time IS NULL";
+		}
+
 		$query = "SELECT *
 				  FROM lots 
-				  WHERE delete_time IS NULL 
+				  $where 
 				  ORDER BY name";
 
 		return $_DB['eoc_cap_mgmt']->doQueryArr($query);

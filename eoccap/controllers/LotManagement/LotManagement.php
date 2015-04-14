@@ -52,7 +52,7 @@ class LotManagement extends \Thinker\Framework\Controller
 		}
 
 		// Get all lots
-		$this->set('LOTS', Lot::findAll());
+		$this->set('LOTS', Lot::fetchAll(true));
 	}
 
 	/**
