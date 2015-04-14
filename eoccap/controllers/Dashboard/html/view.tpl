@@ -10,11 +10,44 @@
 $lots = $this->get('LOTS');
 
 // Determine what to do with each lot
+$attention = array();
+$limited = array();
+$open = array();
+$closed = array();
+
+foreach($lots as $lot)
+{
+	// Organize into separate arrays
+	switch($lot['status'])
+	{
+		case 'Open':
+			$open[] = $lot;
+		break;
+
+		case 'Closed':
+			$closed[] = $lot;
+		break;
+
+		case 'Limited Availability':
+			$limited[] = $lot;
+		break;
+
+		case 'Needs Attention':
+			$attention[] = $lot;
+		break;
+	}
+}
 
 ?>
 <h1>Dashboard</h1>
 <div id="map-canvas" style="clear:both;width:100%;height:500px"></div>
 <h2>Lot List</h2>
+<?php
+
+// Output Needs Attention lots
+if($attention)
+{
+?>
 <legend>Needs Attention</legend>
 <table id="attention" class="tablesorter">
 	<thead>
@@ -26,9 +59,28 @@ $lots = $this->get('LOTS');
 		</tr>
 	</thead>
 	<tbody>
-
+<?php
+	foreach($attention as $lot)
+	{
+?>
+		<tr>
+			<td><a href="<?php echo \Thinker\Http\Url::create('LotConsole', 'manage', array('id' => $lot['id'])); ?>"><?php echo $lot['name']; ?></a></td>
+			<td><?php echo $lot['comment']; ?></td>
+			<td><?php echo $lot['update_time']; ?></td>
+			<td><?php echo $lot['status_create_user']; ?></td>
+		</tr>
+<?php
+	}
+?>
 	</tbody>
 </table>
+<?php
+}
+
+// Output Limited Availability lots
+if($limited)
+{
+?>
 <legend>Limited Availability</legend>
 <table id="limited" class="tablesorter">
 	<thead>
@@ -40,9 +92,28 @@ $lots = $this->get('LOTS');
 		</tr>
 	</thead>
 	<tbody>
-
+<?php
+	foreach($limited as $lot)
+	{
+?>
+		<tr>
+			<td><a href="<?php echo \Thinker\Http\Url::create('LotConsole', 'manage', array('id' => $lot['id'])); ?>"><?php echo $lot['name']; ?></a></td>
+			<td><?php echo $lot['comment']; ?></td>
+			<td><?php echo $lot['update_time']; ?></td>
+			<td><?php echo $lot['status_create_user']; ?></td>
+		</tr>
+<?php
+	}
+?>
 	</tbody>
 </table>
+<?php
+}
+
+// Output open lots
+if($open)
+{
+?>
 <legend>Open</legend>
 <table id="open" class="tablesorter">
 	<thead>
@@ -54,9 +125,28 @@ $lots = $this->get('LOTS');
 		</tr>
 	</thead>
 	<tbody>
-
+<?php
+	foreach($open as $lot)
+	{
+?>
+		<tr>
+			<td><a href="<?php echo \Thinker\Http\Url::create('LotConsole', 'manage', array('id' => $lot['id'])); ?>"><?php echo $lot['name']; ?></a></td>
+			<td><?php echo $lot['comment']; ?></td>
+			<td><?php echo $lot['update_time']; ?></td>
+			<td><?php echo $lot['status_create_user']; ?></td>
+		</tr>
+<?php
+	}
+?>
 	</tbody>
 </table>
+<?php
+}
+
+// Output closed lots
+if($closed)
+{
+?>
 <legend>Closed</legend>
 <table id="closed" class="tablesorter">
 	<thead>
@@ -68,9 +158,24 @@ $lots = $this->get('LOTS');
 		</tr>
 	</thead>
 	<tbody>
-
+<?php
+	foreach($closed as $lot)
+	{
+?>
+		<tr>
+			<td><a href="<?php echo \Thinker\Http\Url::create('LotConsole', 'manage', array('id' => $lot['id'])); ?>"><?php echo $lot['name']; ?></a></td>
+			<td><?php echo $lot['comment']; ?></td>
+			<td><?php echo $lot['update_time']; ?></td>
+			<td><?php echo $lot['status_create_user']; ?></td>
+		</tr>
+<?php
+	}
+?>
 	</tbody>
 </table>
+<?php
+}
+?>
 <script src="https://maps.googleapis.com/maps/api/js"></script>
 <script type="text/javascript">
 	// Google Maps
