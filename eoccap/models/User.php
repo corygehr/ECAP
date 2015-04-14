@@ -144,7 +144,7 @@ class User
 				$query = "INSERT INTO user_passwords(username, hash)
 						  VALUES(?, ?)";
 
-				$hashPw = hash('sha256', (self::hashPassword($password)));
+				$hashPw = self::hashPassword($password);
 
 				if(!$_DB['eoc_cap_mgmt']->doQuery($query, array($data[0], $hashPw)))
 				{
