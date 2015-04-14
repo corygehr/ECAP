@@ -154,6 +154,7 @@ class Login extends \Thinker\Framework\Controller
 				{
 					// Invalid username
 					\Thinker\Framework\Notification::push("User token is inactive or does not exist, please try again.", "warning");
+					return false;
 				}
 
 				$_SESSION['USER'] = new User($un);
