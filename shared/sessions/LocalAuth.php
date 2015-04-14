@@ -51,7 +51,7 @@ class LocalAuth extends Thinker\Framework\Session
 					{
 						foreach($params['url_params'] as $id => $val)
 						{
-							$limiters .= " AND ((uri.identifier_name = :$id AND (uri.identifier_value = :$val OR uri.identifier_value = '*')))";
+							$limiters .= " AND IF(uri.id IS NOT NULL, (uri.identifier_name IN(:$id, '*') AND uri.identifier_value IN (:$val, '*')), 1)";
 							$data[":$id"] = $id;
 							$data[":$val"] = $val;
 						}
@@ -62,7 +62,7 @@ class LocalAuth extends Thinker\Framework\Session
 							  FROM user_rights ur 
 							  LEFT JOIN user_rights_identifiers uri ON uri.right_id = ur.id 
 							  WHERE ur.username = :username 
-							  AND ((ur.s = :section OR ur.s = '*') AND (ur.ss = :subsection OR ur.ss = '*'))
+							  AND (ur.s IN(:section,'*')) AND (ur.ss IN(:subsection, '*'))
 							  $limiters 
 							  LIMIT 1";
 							  
