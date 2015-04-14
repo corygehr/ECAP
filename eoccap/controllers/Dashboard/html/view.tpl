@@ -62,12 +62,25 @@ if($attention)
 <?php
 	foreach($attention as $lot)
 	{
+		// Determine location for status open comment
+		if(strpos($lot['comment'],REPORT_FAIL_TEXT) !== false)
+		{
+			$comment = $lot['notes'];
+			$updateTime = $lot['readiness_create_time'];
+			$updateUser = $lot['readiness_create_user_name'];
+		}
+		else
+		{
+			$comment = $lot['comment'];
+			$updateTime = $lot['status_create_time'];
+			$updateUser = $lot['status_create_user_name'];
+		}
 ?>
 		<tr>
 			<td><a href="<?php echo \Thinker\Http\Url::create('LotConsole', 'manage', array('id' => $lot['id'])); ?>"><?php echo $lot['name']; ?></a></td>
-			<td><?php echo $lot['comment']; ?></td>
-			<td><?php echo $lot['update_time']; ?></td>
-			<td><?php echo $lot['status_create_user_name']; ?></td>
+			<td><?php echo $comment; ?></td>
+			<td><?php echo $updateTime; ?></td>
+			<td><?php echo $updateUser; ?></td>
 		</tr>
 <?php
 	}
