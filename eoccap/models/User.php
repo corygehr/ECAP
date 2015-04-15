@@ -167,6 +167,14 @@ class User
 			}
 			else
 			{
+				// Create access to MyLots
+				if(!self::addUserRight(array($data[0], 'MyLots', 'view')))
+				{
+					// Rollback
+					$_DB['eoc_cap_mgmt']->rollBack();
+					return false;
+				}
+
 				// Create right and get ID
 				$rightId = self::addUserRight(array($data[0], 'LotConsole', 'manage'));
 
