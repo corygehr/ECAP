@@ -93,8 +93,28 @@ class LotReadiness extends \Thinker\Framework\Model
 
 		if($_DB['eoc_cap_mgmt']->doQuery($query, $data))
 		{
-			// Provide ID of created object
-			return $_DB['eoc_cap_mgmt']->lastInsertId();
+			// Store ID of created object
+			$readinessId =  $_DB['eoc_cap_mgmt']->lastInsertId();
+
+			$status = 1;
+
+			// Update the target lot's status as ready
+			if($data[1] && $data[2] && $data[3] && $data[4] && $data[5] && $data[6] && $data[7] && $data[8])
+			{
+				// All statuses are good, update status to Ready
+				$status = 5;
+			}
+			else
+			{
+				// Needs attention
+				$status = 4;
+			}
+
+			// Add new status
+			if(LotStatusLog::create(array($data[0], $status, REPORT_TRG_TEXT)))
+			{
+				return $readinessId;
+			}
 		}
 
 		return false;
