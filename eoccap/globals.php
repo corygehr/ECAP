@@ -16,6 +16,6 @@ define('DEFAULT_VIEW', $_APP_CONFIG['view']['default_view']);
 
 // Additional options
 define('MAPS_KML_URL', $_APP_CONFIG['other']['maps_kml_url']);
-define('REPORT_FAIL_TEXT', $_APP_CONFIG['other']['report_fail_txt']);
+define('REPORT_TRG_TEXT', $_APP_CONFIG['other']['report_trg_txt']);
 
 ?>
