@@ -39,6 +39,10 @@ class SiteManagement extends \Thinker\Framework\Controller
 				$this->addUser();
 			break;
 
+			case 'deleteUserSuccess':
+				\Thinker\Framework\Notification::push("Removed the user successfully!", "success");
+			break;
+
 			case 'success':
 				// Push success message
 				\Thinker\Framework\Notification::push("Created the user successfully!", "success");
