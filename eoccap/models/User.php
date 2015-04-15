@@ -246,6 +246,31 @@ class User
 	}
 
 	/**
+	 * fetchUserRight()
+	 * Fetches a user right from the database
+	 *
+	 * @access public
+	 * @static
+	 * @param string $username Username of Target User
+	 * @param string $section Section Name of right
+	 * @param string $subsection Subsection Name of right
+	 * @return int ID of Right
+	 */
+	public static function fetchUserRight($username, $section, $subsection = null)
+	{
+		global $_DB;
+
+		$query = "SELECT id
+				  FROM user_rights 
+				  WHERE username = ? 
+				  AND s = ? 
+				  AND ss = ? 
+				  LIMIT 1";
+
+		return $_DB['eoc_cap_mgmt']->doQueryAns($query, array($username, $section, $subsection));
+	}
+
+	/**
 	 * getAccountTypes()
 	 * Gets a list of all possible account types
 	 *
