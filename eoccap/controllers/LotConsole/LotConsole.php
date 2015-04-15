@@ -173,10 +173,10 @@ class LotConsole extends \Thinker\Framework\Controller
 	{
 		// Get the details
 		$id = \Thinker\Http\Request::post('id', true);
-		$attendance = \Thinker\Http\Request::post('attendance', true);
+		$capacity = \Thinker\Http\Request::post('capacity', true);
 
 		// Add the log for the specific lot
-		if(LotCapacity::create(array($id, $attendance)))
+		if(LotCapacity::create(array($id, $capacity)))
 		{
 			\Thinker\Http\Redirect::go('LotConsole', 'manage', array('id' => $id, 'phase' => 'capacityUpdateSuccess'));
 		}
