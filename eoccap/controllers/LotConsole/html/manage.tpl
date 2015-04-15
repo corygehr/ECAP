@@ -25,7 +25,6 @@ function selected($val1, $val2)
 }
 
 ?>
-<h4><a href="<?php echo \Thinker\Http\Url::create('LotManagement'); ?>">Back to All Lots</a></h4>
 <?php
 if($targetLot)
 {
