@@ -19,6 +19,19 @@ class _TEMPLATE_ extends \Thinker\Framework\Controller
 	// protected $allowPublicAccess = true;
 
 	/**
+	 * defaultSubsection()
+	 * Returns the default subsection for this Controller
+	 *
+	 * @access public
+	 * @static
+	 * @return string Subsection Name
+	 */
+	public static function defaultSubsection()
+	{
+		return 'info';
+	}
+
+	/**
 	 * info()
 	 * Passes data back for the 'info' subsection
 	 *
