@@ -40,8 +40,8 @@
 
 			case 2:
 ?>
-			<li<?php echo (SECTION == 'LotManagement' || SECTION == 'LotConsole' ? " class='active'" : ''); ?>>
-				<a href="<?php echo \Thinker\Http\Url::create('LotManagement'); ?>">Manage Lots</a>
+			<li<?php echo (SECTION == 'MyLots' ? " class='active'" : ''); ?>>
+				<a href="<?php echo \Thinker\Http\Url::create('MyLots'); ?>">My Lots</a>
 			</li>
 <?php
 			break;
