@@ -15,6 +15,9 @@ class _TEMPLATE_ extends \Thinker\Framework\Controller
 	// grab data (ex. URL/index.php?section=MySection&subsection=info)
 	// Others that simply manipulate data should be private.
 
+	// Uncomment this line if you want to allow ANY user (public) to access the methods of this controller
+	// protected $allowPublicAccess = true;
+
 	/**
 	 * info()
 	 * Passes data back for the 'info' subsection
@@ -23,8 +26,7 @@ class _TEMPLATE_ extends \Thinker\Framework\Controller
 	 */
 	public function info()
 	{
-		// All of these subsection functions should return true
-		return true;
+		// Subsection actions go here, if any are required
 	}
 }
 ?>
