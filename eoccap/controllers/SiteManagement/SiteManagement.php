@@ -54,7 +54,7 @@ class SiteManagement extends \Thinker\Framework\Controller
 		$this->set('USER_TYPES', User::getUserTypes());
 
 		// Get a list of all users
-		$this->set('USERS', User::fetchAll());
+		$this->set('USERS', User::fetchAll(true));
 	}
 
 	/**
