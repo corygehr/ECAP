@@ -224,22 +224,55 @@ class User
 	}
 
 	/**
+	 * deleteRightIdentifier()
+	 * Deletes a Right Identifier
+	 *
+	 * @access public
+	 * @static
+	 * @param int $rightId Right ID
+	 * @param string $identifier Identifier Name
+	 * @param string $identifierVal Identifier Value
+	 * @return True on Success, False on Failure
+	 */
+	public static function deleteRightIdentifier($rightId, $identifier, $identifierVal)
+	{
+		global $_DB;
+
+		$query = "DELETE FROM user_rights_identifiers 
+				  WHERE right_id = ? 
+				  AND identifier_name = ? 
+				  AND identifier_value = ? 
+				  LIMIT 1";
+
+		return $_DB['eoc_cap_mgmt']->doQuery($query, array($rightId, $identifier, $identifierVal));
+	}
+
+	/**
 	 * fetchAll()
 	 * Fetches all users in the database
 	 *
 	 * @access public
 	 * @static
+	 * @param boolean $ignoreInactive Flag to ignore inactive users
 	 * @return mixed[] List of Users
 	 */
-	public static function fetchAll()
+	public static function fetchAll($ignoreInactive = false)
 	{
 		global $_DB;
+
+		$where = '';
+
+		if($ignoreInactive)
+		{
+			$where = "WHERE u.delete_time IS NULL ";
+		}
 
 		$query = "SELECT u.*, at.name AS account_type_name, 
 				  ut.name AS user_type_name
 				  FROM users u 
 				  JOIN account_types at ON at.id = u.account_type 
 				  JOIN user_types ut ON ut.id = u.user_type 
+				  $where 
 				  ORDER BY u.username";
 
 		return $_DB['eoc_cap_mgmt']->doQueryArr($query);
@@ -268,6 +301,27 @@ class User
 				  LIMIT 1";
 
 		return $_DB['eoc_cap_mgmt']->doQueryAns($query, array($username, $section, $subsection));
+	}
+
+	/**
+	 * fetchUserTypeName()
+	 * Gets the name associated with a user type ID
+	 *
+	 * @access public
+	 * @static
+	 * @param int $id User Type ID
+	 * @return string Type Name
+	 */
+	public static function fetchUserTypeName($id)
+	{
+		global $_DB;
+
+		$query = "SELECT name
+				  FROM user_types 
+				  WHERE id = ? 
+				  LIMIT 1";
+
+		return $_DB['eoc_cap_mgmt']->doQueryAns($query, array($id));
 	}
 
 	/**
@@ -334,6 +388,31 @@ class User
 		return !($this->delete_time);
 	}
 
+	/** 
+	 * passwordMatch()
+	 * Checks that the password entered matches that of the current user
+	 *
+	 * @access public
+	 * @param string $password Entered Password
+	 * @return True on Match, False if Not
+	 */
+	public function passwordMatch($password)
+	{
+		global $_DB;
+
+		// Hash the entered password
+		$hash = self::hashPassword($password);
+
+		// Check for match
+		$query = "SELECT COUNT(1)
+				  FROM user_passwords 
+				  WHERE username = ? 
+				  AND hash = ? 
+				  LIMIT 1";
+
+		return $_DB['eoc_cap_mgmt']->doQueryAns($query, array($this->username, $hash));
+	}
+
 	/**
 	 * update()
 	 * Commits the updated object to the database
@@ -351,6 +430,30 @@ class User
 				  WHERE username = :username 
 				  LIMIT 1";
 
-		return $_DB['eoc_lot_mgmt']->doQuery($query, $this->toArray());
+		return $_DB['eoc_cap_mgmt']->doQuery($query, array(':type' => $this->account_type, ':full_name' => $this->full_name, ':username' => $this->username));
+	}
+
+	/**
+	 * updatePassword()
+	 * Updates the current user's password
+	 *
+	 * @access public
+	 * @param string $newPassword New Password
+	 * @return True on Success, False on Failure
+	 */
+	public function updatePassword($newPassword)
+	{
+		global $_DB;
+
+		// Hash password
+		$hash = self::hashPassword($newPassword);
+
+		// Update
+		$query = "UPDATE user_passwords 
+				  SET hash = ? 
+				  WHERE username = ? 
+				  LIMIT 1";
+
+		return $_DB['eoc_cap_mgmt']->doQuery($query, array($hash, $this->username));
 	}
 }
