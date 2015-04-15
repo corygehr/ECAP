@@ -159,7 +159,7 @@ class Login extends \Thinker\Framework\Controller
 
 				$_SESSION['USER'] = new User($un);
 
-				\Thinker\Http\Redirect::go('LotConsole', 'manage', array('id' => 1));
+				\Thinker\Http\Redirect::go('MyLots', 'view');
 			break;
 		}
 
