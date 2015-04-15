@@ -64,8 +64,8 @@ if($targetLot)
 	<legend id="updateCapacity"><a class="fsLink" onclick="showHideFieldset('updateCapacity')">Update Capacity <span class="expandButton">[-]</span></a></legend>
 	<fieldset id="updateCapacity">
 		<p>
-			<label for="attendance">Current Capacity<span class="required">*</span>:</label><br>
-			<input type="number" name="attendance" value="<?php echo $targetCapacity->capacity; ?>" required />%
+			<label for="capacity">Current Capacity<span class="required">*</span>:</label><br>
+			<input type="number" name="capacity" value="<?php echo $targetCapacity->capacity; ?>" min="0" max="100" required />%
 		</p>
 		<input type="hidden" name="id" value="<?php echo $targetLot->id; ?>" />
 		<input type="hidden" name="phase" value="updateCapacity" />
