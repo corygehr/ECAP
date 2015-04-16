@@ -51,6 +51,9 @@ foreach($lots as $lot)
 ?>
 <h1>Dashboard</h1>
 <div id="map-canvas" style="clear:both;width:100%;height:500px"></div>
+<p style="text-align: center;">
+	<a href="<?php echo \Thinker\Http\Url::create('Dashboard', 'fullscreen'); ?>">View Full Screen</a>
+</p>
 <h2>Lot List</h2>
 <?php
 

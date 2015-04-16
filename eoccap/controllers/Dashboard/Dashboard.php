@@ -24,6 +24,23 @@ class Dashboard extends \Thinker\Framework\Controller
 	}
 
 	/**
+	 * fullscreen
+	 * Passes data back for the 'fullscreen' subsection
+	 *
+	 * @access public
+	 */
+	public function fullscreen()
+	{
+		global $_APP_CONFIG;
+
+		// Call view()
+		$this->view();
+
+		// Change the view template
+		$_APP_CONFIG['view-html']['template'] = 'bare';
+	}
+
+	/**
 	 * view()
 	 * Passes data back for the 'view' subsection
 	 *
