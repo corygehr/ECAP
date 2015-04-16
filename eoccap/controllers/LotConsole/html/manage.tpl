@@ -61,8 +61,8 @@ if($targetLot)
 		</span>
 </fieldset>
 <form method="post">
-	<legend id="updateCapacity"><a class="fsLink" onclick="showHideFieldset('updateCapacity')">Update Capacity <span class="expandButton">[-]</span></a></legend>
-	<fieldset id="updateCapacity">
+	<legend id="updateCapacity"><a class="fsLink" onclick="showHideFieldset('updateCapacity')">Update Capacity <span class="expandButton"><?php echo ($targetStatus->id == 3 ? '[+]' : '[-]'); ?></span></a></legend>
+	<fieldset id="updateCapacity"<?php echo ($targetStatus->id == 3 ? ' style="display:none"' : ''); ?>>
 		<p>
 			<label for="capacity">Current Capacity<span class="required">*</span>:</label><br>
 			<input type="number" name="capacity" value="<?php echo $targetCapacity->capacity; ?>" min="0" max="100" required />%
