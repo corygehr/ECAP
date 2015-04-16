@@ -12,7 +12,7 @@
 	<fieldset>
 		<legend>Credentials</legend>
 		<p>
-			<label for="username">Identifier<span class="required">*</span>:</label><br>
+			<label for="username">Access Code<span class="required">*</span>:</label><br>
 			<input name="username" required />
 		</p>
 		<input type="hidden" name="phase" value="login" />
