@@ -79,17 +79,58 @@ class LotCapacity extends \Thinker\Framework\Model
 	{
 		global $_DB;
 
-		$query = "INSERT INTO lot_capacity(lot_id, capacity, 
-			create_user, create_time) 
-			VALUES(?, ?, ?, NOW())";
+		$currentStatus = LotStatusLog::fetchCurrentLotStatus($data[0]);
 
-		// Add current user to $data
-		$data[] = $_SESSION['USER']->username;
-
-		if($_DB['eoc_cap_mgmt']->doQuery($query, $data))
+		// Start transaction
+		if(!empty($currentStatus) && $_DB['eoc_cap_mgmt']->beginTransaction())
 		{
-			// Provide ID of created object
-			return $_DB['eoc_cap_mgmt']->lastInsertId();
+			$query = "INSERT INTO lot_capacity(lot_id, capacity, 
+				create_user, create_time) 
+				VALUES(?, ?, ?, NOW())";
+
+			// Add current user to $data
+			$data[] = $_SESSION['USER']->username;
+
+			if(!$_DB['eoc_cap_mgmt']->doQuery($query, $data))
+			{
+				// Rollback
+				$_DB['eoc_cap_mgmt']->rollBack();
+				return false;
+			}
+
+			// Store ID of created object
+			$capId = $_DB['eoc_cap_mgmt']->lastInsertId();
+
+			// Add new status log for 'Full' if the lot is full
+			if($data[1] >= 100)
+			{
+				// Set to FULL
+				if(!LotStatusLog::create(array($data[0], 6, "Capacity has reached 100%")))
+				{
+					// Rollback
+					$_DB['eoc_cap_mgmt']->rollBack();
+					return false;
+				}
+			}
+			elseif($data[1] < 100 && $currentStatus->status_id == 6)
+			{
+				// Set to ready from FULL
+				if(!LotStatusLog::create(array($data[0], 1, "Capacity has fallen below 100%")))
+				{
+					// Rollback
+					$_DB['eoc_cap_mgmt']->rollBack();
+					return false;
+				}
+			}
+
+			if($_DB['eoc_cap_mgmt']->commit())
+			{
+				return $capId;
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		return false;

@@ -15,6 +15,7 @@ $limited = array();
 $open = array();
 $closed = array();
 $ready = array();
+$full = array();
 
 foreach($lots as $lot)
 {
@@ -39,6 +40,10 @@ foreach($lots as $lot)
 
 		case 'Ready':
 			$ready[] = $lot;
+		break;
+
+		case 'Full':
+			$full[] = $lot;
 		break;
 	}
 }
@@ -132,6 +137,39 @@ if($ready)
 			<td><?php echo $comment; ?></td>
 			<td><?php echo $updateTime; ?></td>
 			<td><?php echo $updateUser; ?></td>
+		</tr>
+<?php
+	}
+?>
+	</tbody>
+</table>
+<?php
+}
+
+// Output Full lots
+if($full)
+{
+?>
+<legend>Full Lots</legend>
+<table id="limited" class="tablesorter">
+	<thead>
+		<tr>
+			<th>Lot Name</th>
+			<th>Comment</th>
+			<th>Last Update</th>
+			<th>Updated By</th>
+		</tr>
+	</thead>
+	<tbody>
+<?php
+	foreach($full as $lot)
+	{
+?>
+		<tr>
+			<td><a href="<?php echo \Thinker\Http\Url::create('LotConsole', 'manage', array('id' => $lot['id'])); ?>"><?php echo $lot['name']; ?></a></td>
+			<td><?php echo $lot['comment']; ?></td>
+			<td><?php echo $lot['update_time']; ?></td>
+			<td><?php echo $lot['status_create_user_name']; ?></td>
 		</tr>
 <?php
 	}
