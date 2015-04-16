@@ -328,6 +328,7 @@ if($closed)
         	'<h4><?php echo $lot['name'] . " (" . $lot['location_name'] . ")"; ?></h4>'+
         	'<p><b>Status:</b> <?php echo $lot['status']; ?></p>'+
         	'<p><b>Current Capacity:</b> <?php echo $lot['capacity']; ?>%</p>'+
+        	'<p><b>Last Capacity Update:</b> <?php echo $lot['capacity_create_time']; ?></p>'+
         	'<p><a href="<?php echo \Thinker\Http\Url::create('LotConsole', 'manage', array('id' => $lot['id'])); ?>">Manage Lot</a></p>'+
         	'</div>';
 
