@@ -45,7 +45,7 @@
     <!--Custom CSS-->
     <link href="html/psueoc/css/eoc.css" rel="stylesheet">
     <link href="html/psueoc/css/justified-nav.css" rel="stylesheet">
-    <link rel="shortcut icon" href="html/psueoc/img/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="shortcut icon" href="View/html/shared/images/favicon.ico" type="image/vnd.microsoft.icon" />
 
     <!-- jQuery 1.9.1 -->
     <script type='text/javascript' src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js'></script>
