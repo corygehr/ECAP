@@ -17,7 +17,7 @@ $lots = $this->get('LOTS');
 	<fieldset id="addUser" class="expandable" style="display:none">
 		<p>
 			<label for="username">Username<span class="required">*</span>:</label><br>
-			<input name="username" pattern=".{10}" title="Usernames may only be a maximum of ten (10) characters." required />
+			<input name="username" maxlength="10" required />
 		</p>
 		<p>
 			<label for="full_name">Full Name<span class="required">*</span>:</label><br>
