@@ -267,8 +267,8 @@ if($targetLot)
 	</fieldset>
 </form>
 <form method="post">
-	<legend id="updateInformation"><a class="fsLink" onclick="showHideFieldset('updateInformation')">Update Lot Information <span class="expandButton">[+]</span></a></legend>
-	<fieldset id="updateInformation" style="display:none">
+	<legend id="updateDetails"><a class="fsLink" onclick="showHideFieldset('updateDetails')">Update Lot Information <span class="expandButton">[+]</span></a></legend>
+	<fieldset id="updateDetails" style="display:none">
 		<p>
 			<label for="name">Lot Name<span class="required">*</span>:</label><br>
 			<input name="name" value="<?php echo $targetLot->name; ?>" required />
@@ -294,7 +294,7 @@ if($targetLot)
 			<input name="max_capacity" value="<?php echo $targetLot->max_capacity; ?>" required />
 		</p>
 		<input type="hidden" name="id" value="<?php echo $targetLot->id; ?>" />
-		<input type="hidden" name="phase" value="updateInformation" />
+		<input type="hidden" name="phase" value="updateDetails" />
 		<input type="submit" value="Update Details" />
 	</fieldset>
 </form>
