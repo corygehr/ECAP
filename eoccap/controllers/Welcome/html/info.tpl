@@ -19,5 +19,5 @@
 </p>
 <ul>
 	<li><a href="<?php echo \Thinker\Http\Url::create('Login', 'attendant'); ?>">Parking Lot Attendant</a></li>
-	<li><a href="<?php echo \Thinker\Http\Url::create('Login', 'administrator'); ?>">Emergency Operations Staff</a></li>
+	<li><a href="<?php echo \Thinker\Http\Url::create('Login', 'administrator'); ?>">Administrative Staff</a></li>
 </ul>
