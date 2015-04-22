@@ -4,20 +4,20 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c245acbb4e69f25adcf3026664026db3",
+    "hash": "a85eb9ead5a97c43f0f872419127bd27",
     "packages": [
         {
-            "name": "thon/thinker-lib",
+            "name": "corygehr/thinker-lib",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/penn-state-dance-marathon/thon-thinker-lib.git",
-                "reference": "569515f7db5bf9e2bc8f1363af8306aaf9c33bf8"
+                "url": "https://github.com/corygehr/corygehr-thinker-lib.git",
+                "reference": "068c0dd950f07f74282c8c217ebb17b4df8a7ded"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/penn-state-dance-marathon/thon-thinker-lib/zipball/569515f7db5bf9e2bc8f1363af8306aaf9c33bf8",
-                "reference": "569515f7db5bf9e2bc8f1363af8306aaf9c33bf8",
+                "url": "https://api.github.com/repos/corygehr/corygehr-thinker-lib/zipball/068c0dd950f07f74282c8c217ebb17b4df8a7ded",
+                "reference": "068c0dd950f07f74282c8c217ebb17b4df8a7ded",
                 "shasum": ""
             },
             "require": {
@@ -42,12 +42,11 @@
                 }
             ],
             "description": "THINKer Framework Core Library",
-            "homepage": "https://github.com/penn-state-dance-marathon/thon-thinker-lib",
+            "homepage": "https://github.com/corygehr/corygehr-thinker-lib",
             "keywords": [
-                "framework",
-                "thon"
+                "framework"
             ],
-            "time": "2015-04-14 21:37:13"
+            "time": "2015-04-21 17:11:17"
         }
     ],
     "packages-dev": [
@@ -111,12 +110,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "0a4c4ed40888783c992198d5d520d49c1c87f9d5"
+                "reference": "1678cee3b7f93f994da6acf7e998b23a98e955f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/0a4c4ed40888783c992198d5d520d49c1c87f9d5",
-                "reference": "0a4c4ed40888783c992198d5d520d49c1c87f9d5",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/1678cee3b7f93f994da6acf7e998b23a98e955f1",
+                "reference": "1678cee3b7f93f994da6acf7e998b23a98e955f1",
                 "shasum": ""
             },
             "require": {
@@ -165,7 +164,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-04-14 09:28:40"
+            "time": "2015-04-16 05:00:01"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -852,7 +851,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "thon/thinker-lib": 20
+        "corygehr/thinker-lib": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
