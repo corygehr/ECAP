@@ -78,7 +78,7 @@ class Event extends \Thinker\Framework\Model
 	{
 		global $_DB;
 
-		$query = "INSERT INTO lots(name, start_time, end_time, 
+		$query = "INSERT INTO events(name, start_time, end_time, 
 			create_user, create_time) 
 			VALUES(?, ?, ?, ?, NOW())";
 
