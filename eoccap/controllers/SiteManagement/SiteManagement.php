@@ -43,7 +43,16 @@ class SiteManagement extends \Thinker\Framework\Controller
 				\Thinker\Framework\Notification::push("Removed the user successfully!", "success");
 			break;
 
-			case 'success':
+			case 'resetDb':
+				$this->resetLots();
+			break;
+
+			case 'resetSuccess':
+				// Push success message
+				\Thinker\Framework\Notification::push("Reset database successfully!", "success");
+			break;
+
+			case 'userCreateSuccess':
 				// Push success message
 				\Thinker\Framework\Notification::push("Created the user successfully!", "success");
 			break;
@@ -76,11 +85,68 @@ class SiteManagement extends \Thinker\Framework\Controller
 		if(User::create(array($username, $name, $type, $type), $password, $lot))
 		{
 			// Redirect for success
-			\Thinker\Http\Redirect::go('SiteManagement', 'manage', array('phase' => 'success'));
+			\Thinker\Http\Redirect::go('SiteManagement', 'manage', array('phase' => 'userCreateSuccess'));
 		}
 		else
 		{
 			\Thinker\Framework\Notification::push("Failed to create the user, please try again.", "error");
+		}
+	}
+
+	/**
+	 * resetLots()
+	 * Resets all lots to zero capacity and closed statuses
+	 *
+	 * @access private
+	 */
+	private function resetLots()
+	{
+		global $_DB;
+
+		// Get all lots
+		$lots = Lot::fetchAll(true);
+
+		if($lots)
+		{
+			// Start transaction
+			if($_DB['eoc_cap_mgmt']->beginTransaction())
+			{
+				foreach($lots as $lot)
+				{
+					// Create new capacity and status entries
+					if(!LotStatusLog::create(array($lot['id'], 3, "(System Reset)")) || 
+						!LotCapacity::create(array($lot['id'], 0)))
+					{
+						// Rollback
+						$_DB['eoc_cap_mgmt']->rollBack();
+						\Thinker\Framework\Notification::push("Failed to update lot {$lot['id']}, changes have NOT been saved.", "error");
+						return false;
+					}
+				}
+
+				// Commit
+				if($_DB['eoc_cap_mgmt']->commit())
+				{
+					// Redirect
+					\Thinker\Http\Redirect::go('SiteManagement', 'manage', array('phase' => 'resetSuccess'));
+				}
+				else
+				{
+					$_DB['eoc_cap_mgmt']->rollBack();
+					\Thinker\Framework\Notification::push("Failed to commit transaction, cannot continue.", "error");
+					return false;
+				}
+			}
+			else
+			{
+				\Thinker\Framework\Notification::push("Failed to start transaction, cannot continue.", "error");
+				return false;
+			}
+		}
+		else
+		{
+			\Thinker\Framework\Notification::push("Failed to pull lot list, cannot continue.", "error");
+			return false;
 		}
 	}
 }
