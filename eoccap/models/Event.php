@@ -144,6 +144,31 @@ class Event extends \Thinker\Framework\Model
 	}
 
 	/**
+	 * fetchEventLots()
+	 * Fetches all lots used for a specific event
+	 *
+	 * @access public
+	 * @static
+	 * @param int $eventId Event ID
+	 * @return mixed[] Array of Lot results
+	 */
+	public static function fetchEventLots($eventId)
+	{
+		global $_DB;
+
+		$query = "SELECT e.id AS event_id, e.name AS event_name, e.start_time, e.end_time, 
+				  l.id AS lot_id, l.name AS lot_name, l.color, l.location_name, l.latitude, 
+				  l.longitude, l.max_capacity 
+				  FROM event_lots el 
+				  JOIN lots l ON l.id = el.lot_id 
+				  JOIN events e ON e.id = el.event_id 
+				  WHERE el.event_id = ? 
+				  ORDER BY l.name";
+
+		return $_DB['eoc_cap_mgmt']->doQueryArr($query, array($eventId));
+	}
+
+	/**
 	 * isActive()
 	 * Returns true if the current object is active
 	 *
