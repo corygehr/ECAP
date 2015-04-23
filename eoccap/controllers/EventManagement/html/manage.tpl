@@ -19,12 +19,20 @@ $events = $this->get('EVENTS');
 			<input name="name" required />
 		</p>
 		<p>
-			<label for="start_time">Start Date/Time<span class="required">*</span>:</label><br>
-			<input name="start_time" required />
+			<label for="start_date">Start Date<span class="required">*</span>:</label><br>
+			<input type="date" id="start_date" name="start_date" class="datepicker" required />
 		</p>
 		<p>
-			<label for="end_time">End Date/Time<span class="required">*</span>:</label><br>
-			<input name="end_time" required>
+			<label for="start_time">Start Time (24-hour HH:MM format)<span class="required">*</span>:</label><br>
+			<input type="time" id="start_time" name="start_time" required />
+		</p>
+		<p>
+			<label for="end_date">End Date<span class="required">*</span>:</label><br>
+			<input type="date" id="end_date" name="end_date" class="datepicker" required />
+		</p>
+		<p>
+			<label for="end_time">End Time (24-hour HH:MM format)<span class="required">*</span>:</label><br>
+			<input type="time" id="end_time" name="end_time" required />
 		</p>
 		<input type="hidden" name="phase" value="addEvent" />
 		<input type="submit" value="Add Event" />

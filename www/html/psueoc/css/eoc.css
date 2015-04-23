@@ -12,6 +12,14 @@ a.fsLink {
 	text-decoration: none;
 }
 
+input.datepicker {
+	background-image: url('../../shared/images/calendar.png');
+	background-repeat: no-repeat;
+	background-position: center right;
+	border: 1px solid #aaa;
+	padding-right: 15px;
+}
+
 .masthead{
 background-color:#01124B;
 color:#FFFFFF;

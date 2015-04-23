@@ -63,11 +63,16 @@ class EventManagement extends \Thinker\Framework\Controller
 	{
 		// Gather data
 		$name = \Thinker\Http\Request::post('name', true);
+		$startDate = \Thinker\Http\Request::post('start_date', true);
 		$startTime = \Thinker\Http\Request::post('start_time', true);
+		$endDate = \Thinker\Http\Request::post('end_date', true);
 		$endTime = \Thinker\Http\Request::post('end_time', true);
 
+		$start = date('Y-m-d H:i:s', strtotime("$startDate $startTime"));
+		$end = date('Y-m-d H:i:s', strtotime("$endDate $endTime"));
+
 		// Check for success
-		if(Event::create(array($name, $startTime, $endTime)))
+		if(Event::create(array($name, $start, $end)))
 		{
 			// Redirect for success
 			\Thinker\Http\Redirect::go('EventManagement', 'manage', array('phase' => 'success'));
