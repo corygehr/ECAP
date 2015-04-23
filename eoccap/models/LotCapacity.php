@@ -79,11 +79,28 @@ class LotCapacity extends \Thinker\Framework\Model
 	{
 		global $_DB;
 
+		// Track if we're already in a transaction
+		$transactionOrigin = true;
+
 		$currentStatus = LotStatusLog::fetchCurrentLotStatus($data[0]);
 
 		// Start transaction
-		if(!empty($currentStatus) && $_DB['eoc_cap_mgmt']->beginTransaction())
+		if(!empty($currentStatus))
 		{
+			if($_DB['eoc_cap_mgmt']->inTransaction())
+			{
+				$transactionOrigin = false;
+			}
+			else
+			{
+				// Start transaction
+				if(!$_DB['eoc_cap_mgmt']->beginTransaction())
+				{
+					// Fail
+					return false;
+				}
+			}
+
 			$query = "INSERT INTO lot_capacity(lot_id, capacity, 
 				create_user, create_time) 
 				VALUES(?, ?, ?, NOW())";
@@ -123,14 +140,18 @@ class LotCapacity extends \Thinker\Framework\Model
 				}
 			}
 
-			if($_DB['eoc_cap_mgmt']->commit())
+			if($transactionOrigin)
 			{
-				return $capId;
+				// Attempt commit
+				if(!$_DB['eoc_cap_mgmt']->commit())
+				{
+					// Rollback
+					$_DB['eoc_cap_mgmt']->rollBack();
+					return false;
+				}
 			}
-			else
-			{
-				return false;
-			}
+
+			return $capId;
 		}
 
 		return false;
