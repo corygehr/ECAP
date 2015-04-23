@@ -113,7 +113,7 @@ class Lot extends \Thinker\Framework\Model
 				  delete_user = :user 
 				  WHERE id = :id 
 				  LIMIT 1";
-		$params = array(':user' => 'cmg5573', ':id' => $this->id);
+		$params = array(':user' => $_SESSION['USER']->username, ':id' => $this->id);
 
 		return $_DB['eoc_cap_mgmt']->doQuery($query, $params);
 	}
