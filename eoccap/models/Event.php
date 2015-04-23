@@ -204,7 +204,6 @@ class Event extends \Thinker\Framework\Model
 				$this->name,
 				$this->start_time,
 				$this->end_time,
-				$this->max_capacity,
 				$_SESSION['USER']->username,
 				$this->id));
 	}
