@@ -113,4 +113,32 @@ $lots = $this->get('LOTS');
 <?php
 	}
 ?>
+<form method="post">
+	<legend id="advancedSettings"><a class="fsLink" onclick="showHideFieldset('advancedSettings')">Advanced Settings <span class="expandButton">[+]</span></a></legend>
+	<fieldset id="advancedSettings" style="display:none;">
+		<p>
+			<label for="timezone">Timezone:</label><br>
+			<select name="timezone">
+				<option value="">Select One:</option>
+			</select>
+		</p>
+		<input type="hidden" name="phase" value="advancedSettings" />
+		<input type="submit" value="Update Settings" />
+	</fieldset>
+</form>
+<form id="resetDb" method="post">
+	<legend id="resetDb"><a class="fsLink" onclick="showHideFieldset('resetDb')">Reset Database <span class="expandButton">[+]</span></a></legend>
+	<fieldset id="resetDb" style="display:none;">
+		<p>
+			<b>WARNING:</b> By pressing 'Reset Database' below, you will return all lot 
+			capacities to 0% and close them. Be sure this is what you want to do 
+			before proceeding.
+		</p>
+		<p>
+			This is normally done after an event has ended.
+		</p>
+		<input type="hidden" name="phase" value="resetDb" />
+		<input type="submit" value="Reset Database" />
+	</fieldset>
+</form>
 <script type="text/javascript" src="html/psueoc/js/SiteManagement/manage.js"></script>

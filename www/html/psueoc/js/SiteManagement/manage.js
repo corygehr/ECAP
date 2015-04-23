@@ -22,3 +22,7 @@ $(document).ready(function() {
 
 	$('#user_list').tablesorter();
 });
+
+$("#resetDb").submit(function() {
+	return confirm("Click OK to confirm you would like to reset ALL lots. This operation cannot be undone.");
+});
