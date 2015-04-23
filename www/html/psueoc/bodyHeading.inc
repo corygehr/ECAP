@@ -32,6 +32,9 @@
 			<li<?php echo (SECTION == 'LotManagement' || SECTION == 'LotConsole' ? " class='active'" : ''); ?>>
 				<a href="<?php echo \Thinker\Http\Url::create('LotManagement'); ?>">Manage Lots</a>
 			</li>
+			<li<?php echo (SECTION == 'EventManagement' ? " class='active'" : ''); ?>>
+				<a href="<?php echo \Thinker\Http\Url::create('EventManagement'); ?>">Event Management</a>
+			</li>
 			<li<?php echo (SECTION == 'SiteManagement' ? " class='active'" : ''); ?>>
 				<a href="<?php echo \Thinker\Http\Url::create('SiteManagement'); ?>">Site Management</a>
 			</li>
