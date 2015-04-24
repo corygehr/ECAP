@@ -52,6 +52,14 @@ class SiteManagement extends \Thinker\Framework\Controller
 				\Thinker\Framework\Notification::push("Reset database successfully!", "success");
 			break;
 
+			case 'updateAdvancedSettings':
+				$this->updateAdvancedSettings();
+			break;
+
+			case 'updateAdvancedSettingsSuccess':
+				\Thinker\Framework\Notification::push("Updated settings successfully!", "success");
+			break;
+
 			case 'userCreateSuccess':
 				// Push success message
 				\Thinker\Framework\Notification::push("Created the user successfully!", "success");
@@ -64,6 +72,10 @@ class SiteManagement extends \Thinker\Framework\Controller
 
 		// Get a list of all users
 		$this->set('USERS', User::fetchAll(true));
+
+		// Provide all PHP Timezones
+		$this->set('SUPPORTED_TIMEZONES', \DateTimeZone::listIdentifiers(\DateTimeZone::ALL));
+		$this->set('TIMEZONE', date_default_timezone_get());
 	}
 
 	/**
@@ -146,6 +158,30 @@ class SiteManagement extends \Thinker\Framework\Controller
 		else
 		{
 			\Thinker\Framework\Notification::push("Failed to pull lot list, cannot continue.", "error");
+			return false;
+		}
+	}
+
+	/**
+	 * updateAdvancedSettings()
+	 * Updates advanced settings in the database
+	 *
+	 * @access private
+	 */
+	private function updateAdvancedSettings()
+	{
+		// Get value and set global
+		$timezone = \Thinker\Http\Request::post('timezone', true);
+
+		if(SiteGlobal::update('TIMEZONE', $timezone))
+		{
+			// Redirect
+			\Thinker\Http\Redirect::go('SiteManagement', 'manage', array('phase' => 'updateAdvancedSettingsSuccess'));
+		}
+		else
+		{
+			// Throw error
+			\Thinker\Framework\Notification::push("Failed to update settings, please try again.", "error");
 			return false;
 		}
 	}

@@ -82,26 +82,12 @@ class SiteGlobal extends \Thinker\Framework\Model
 	{
 		global $_DB;
 
-		$query = "UPDATE lots
-				  SET name = ?,
-				  color = ?, 
-				  location_name = ?, 
-				  latitude = ?, 
-				  longitude = ?, 
-				  max_capacity = ?, 
+		$query = "UPDATE globals 
+				  SET value = ?, 
 				  update_user = ? 
-				  WHERE id = ? 
+				  WHERE name = ? 
 				  LIMIT 1";
-
-		return $_DB['eoc_cap_mgmt']->doQuery($query, 
-			array(
-				$this->name,
-				$this->color,
-				$this->location_name,
-				$this->latitude,
-				$this->longitude,
-				$this->max_capacity,
-				'cmg5573',
-				$this->id));
+				  
+		return $_DB['eoc_cap_mgmt']->doQuery($query, array($value, $_SESSION['USER']->username, $name));
 	}
 }

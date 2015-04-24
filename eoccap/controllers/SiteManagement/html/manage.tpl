@@ -114,15 +114,34 @@ $lots = $this->get('LOTS');
 	}
 ?>
 <form method="post">
-	<legend id="advancedSettings"><a class="fsLink" onclick="showHideFieldset('advancedSettings')">Advanced Settings <span class="expandButton">[+]</span></a></legend>
-	<fieldset id="advancedSettings" style="display:none;">
+	<legend id="updateAdvancedSettings"><a class="fsLink" onclick="showHideFieldset('updateAdvancedSettings')">Advanced Settings <span class="expandButton">[+]</span></a></legend>
+	<fieldset id="updateAdvancedSettings" style="display:none;">
 		<p>
 			<label for="timezone">Timezone:</label><br>
 			<select name="timezone">
 				<option value="">Select One:</option>
+<?php
+	$zones = $this->get('SUPPORTED_TIMEZONES');
+	$current = $this->get('TIMEZONE');
+
+	if($zones)
+	{
+		foreach($zones as $z)
+		{
+			$selected = '';
+			if($z == $current)
+			{
+				$selected = " selected";
+			}
+?>
+				<option value="<?php echo $z; ?>" <?php echo $selected; ?>><?php echo $z; ?></option>
+<?php
+		}
+	}
+?>
 			</select>
 		</p>
-		<input type="hidden" name="phase" value="advancedSettings" />
+		<input type="hidden" name="phase" value="updateAdvancedSettings" />
 		<input type="submit" value="Update Settings" />
 	</fieldset>
 </form>

@@ -9,6 +9,10 @@
 // Include app-specific globals
 require_once('globals.php');
 
+// Set timezone
+$globalsClass = "\\".APP_NAMESPACE."\\SiteGlobal";
+date_default_timezone_set($globalsClass::fetch('TIMEZONE'));
+
 // Load specified section
 if(isset($_GET['s']))
 {
